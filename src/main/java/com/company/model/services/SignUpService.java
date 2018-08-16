@@ -7,15 +7,24 @@ import com.company.model.exceptions.*;
 import java.util.List;
 
 public class SignUpService {
+    private ServiceUtils utils;
+
+    public SignUpService() {
+        utils = new ServiceUtils();
+    }
+
+    public SignUpService(ServiceUtils utils) {
+        this.utils = utils;
+    }
 
     public void createUser(String nickname, String login, String password) throws Exception{
         User user = new TrackerUser.Builder(nickname, login, password).build();
         checkUserUnique(user);
-        ServiceUtils.createUser(user);
+        utils.createUser(user);
     }
 
     private void checkUserUnique(User user) throws Exception{
-        List<User> users = ServiceUtils.getAllUsers();
+        List<User> users = utils.getAllUsers();
         if (users.stream().anyMatch(u -> u.getNickname().equals(user.getNickname()))) {
             throw new NotUniqueNicknameException(user.getNickname());
         }

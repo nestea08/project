@@ -12,7 +12,7 @@ public class DataCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        List<User> users = new ArrayList<>();
+        /*List<User> users = new ArrayList<>();
         Collections.addAll(users,
                 new User("qqqqq@gmail.com", "qqqqqq", User.Role.USER),
                 new User("wwwww@gmail.com", "wwwwww", User.Role.USER),
@@ -31,7 +31,7 @@ public class DataCommand implements Command {
             paginator.setCurrentPage(Integer.parseInt(pageParameter));
         }
         request.setAttribute("users", paginator.getItemsForCurrentPage());
-        request.setAttribute("pagesCount", paginator.getPagesCount());
+        request.setAttribute("pagesCount", paginator.getPagesCount());*/
         return "/data.jsp";
     }
 }
