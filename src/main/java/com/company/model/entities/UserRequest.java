@@ -1,5 +1,7 @@
 package com.company.model.entities;
 
+import java.util.Objects;
+
 public class UserRequest {
     private int id;
     private TrackerUser user;
@@ -35,5 +37,20 @@ public class UserRequest {
 
     public RequestType getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserRequest)) return false;
+        UserRequest request = (UserRequest) o;
+        return user.equals(request.getUser()) &&
+                activity.equals(request.activity) &&
+                type == request.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return ((user.hashCode() * 31) + activity.hashCode() * 31) + type.hashCode();
     }
 }
