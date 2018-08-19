@@ -1,4 +1,4 @@
-package com.company.model.services;
+package com.company.model.services.users;
 
 import com.company.model.entities.TrackerUser;
 import com.company.model.entities.User;
@@ -7,13 +7,13 @@ import com.company.model.exceptions.*;
 import java.util.List;
 
 public class SignUpService {
-    private ServiceUtils utils;
+    private UsersUtils utils;
 
     public SignUpService() {
-        utils = new ServiceUtils();
+        utils = new UsersUtils();
     }
 
-    public SignUpService(ServiceUtils utils) {
+    public SignUpService(UsersUtils utils) {
         this.utils = utils;
     }
 

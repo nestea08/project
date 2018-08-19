@@ -1,15 +1,15 @@
-package com.company.model.services;
+package com.company.model.services.users;
 
 import com.company.model.entities.User;
 
 public class SignInService {
-    private ServiceUtils utils;
+    private UsersUtils utils;
 
     public SignInService() {
-        utils = new ServiceUtils();
+        utils = new UsersUtils();
     }
 
-    public SignInService(ServiceUtils utils) {
+    public SignInService(UsersUtils utils) {
         this.utils = utils;
     }
 
