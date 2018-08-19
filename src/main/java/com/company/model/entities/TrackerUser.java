@@ -1,12 +1,13 @@
 package com.company.model.entities;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.Tracker;
 
-public class TrackerUser extends User {
-    private Map<Activity, Integer> trackingActivities;
+import java.util.*;
+
+public class TrackerUser extends User implements Tracker{
+    private Map<Tracked, Integer> trackedItems;
 
     public static class Builder extends User.Builder {
         public Builder(String nickname, String login, String password) {
@@ -28,31 +29,35 @@ public class TrackerUser extends User {
 
     private TrackerUser(Builder builder) {
         super(builder);
-        trackingActivities = new HashMap<>();
+        trackedItems = new HashMap<>();
     }
 
-    public void addActivity(Activity activity) {
-        trackingActivities.put(activity, 0);
+    public void addTracked(Tracked tracked) {
+        trackedItems.put(tracked, 0);
     }
 
-    public void removeActivity(Activity activity) {
-        trackingActivities.remove(activity);
+    public void removeTracked(Tracked tracked) {
+        trackedItems.remove(tracked);
     }
 
-    public Activity getActivity(String title) {
-        Optional<Activity> activityOptional = trackingActivities.keySet().stream().
-                filter(activity -> activity.getTitle().equals(title)).findFirst();
-        if (!activityOptional.isPresent()) {
+    public Tracked getTrackedById(int id) {
+        Optional<Tracked> trackedOptional = trackedItems.keySet().stream().
+                filter(item -> item.getId() == id).findFirst();
+        if (!trackedOptional.isPresent()) {
             throw new RuntimeException();
         }
-        return activityOptional.get();
+        return trackedOptional.get();
     }
 
-    public void putSpentTimeOnActivity(Activity activity, Integer spentTime) {
-        trackingActivities.put(activity, spentTime);
+    public Set<Tracked> getAllTracked() {
+        return trackedItems.keySet();
     }
 
-    public Integer getSpentTimeOnActivity(Activity activity) {
-        return trackingActivities.get(activity);
+    public void setSpentTimeOnTracked(Tracked tracked, Integer spentTime) {
+        trackedItems.put(tracked, spentTime);
+    }
+
+    public Integer getSpentTimeOnTracked(Tracked tracked) {
+        return trackedItems.get(tracked);
     }
 }

@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-Hello user!
+Hello tracker!
 </body>
 </html>

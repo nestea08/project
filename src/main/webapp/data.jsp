@@ -15,11 +15,11 @@
 <body>
     data
 
-    <c:forEach items="${requestScope.users}" var="user">
+    <c:forEach items="${requestScope.users}" var="tracker">
         <ul>
-            <li><c:out value="${user.login}"/></li>
-            <li><c:out value="${user.password}"/></li>
-            <li><c:out value="${user.role}"/></li>
+            <li><c:out value="${tracker.login}"/></li>
+            <li><c:out value="${tracker.password}"/></li>
+            <li><c:out value="${tracker.role}"/></li>
         </ul>
     </c:forEach>
     <c:forEach var="i" begin="1" end="${requestScope.pagesCount}">

@@ -15,11 +15,11 @@ public class JDBCUserRequestDao implements UserRequestDao {
     }
 
     @Override
-    public void create(UserRequest item) {
+    public void create(Request item) {
         try (PreparedStatement statement = connection.prepareStatement
                 ("insert into request (user_id, activity_id, command) values (?, ?, ?)")) {
-            statement.setInt(1, item.getUser().getId());
-            statement.setInt(2, item.getActivity().getId());
+            statement.setInt(1, item.getTracker().getId());
+            statement.setInt(2, item.getTracked().getId());
             statement.setString(3, item.getType().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -28,7 +28,7 @@ public class JDBCUserRequestDao implements UserRequestDao {
     }
 
     @Override
-    public UserRequest findById(int id) {
+    public Request findById(int id) {
         RequestMapper mapper = new RequestMapper();
         try (PreparedStatement statement = connection.prepareStatement
                 ("select * from request join users using(user_id) join activities using(activity_id) where request_id = ?")) {
@@ -41,8 +41,8 @@ public class JDBCUserRequestDao implements UserRequestDao {
     }
 
     @Override
-    public List<UserRequest> findAll() {
-        List<UserRequest> result = new ArrayList<>();
+    public List<Request> findAll() {
+        List<Request> result = new ArrayList<>();
         Map<Integer, TrackerUser> users = new HashMap<>();
         Map<Integer, Activity> activities = new HashMap<>();
         ActivityMapper activityMapper = new ActivityMapper();
@@ -55,7 +55,7 @@ public class JDBCUserRequestDao implements UserRequestDao {
                 activity = activityMapper.makeUnique(activities, activity);
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
-                user.addActivity(activity);
+                user.addTracked(activity);
                 result.add(requestMapper.extractWithSpecifiedReferences(set, user, activity));
             }
         } catch (SQLException e) {
@@ -65,12 +65,12 @@ public class JDBCUserRequestDao implements UserRequestDao {
     }
 
     @Override
-    public void update(UserRequest item) {
+    public void update(Request item) {
         try (PreparedStatement statement = connection.prepareStatement
                 ("update request set command = ? where user_id = ? & activity_id = ?")) {
             statement.setString(1, item.getType().toString());
-            statement.setInt(2, item.getUser().getId());
-            statement.setInt(3, item.getActivity().getId());
+            statement.setInt(2, item.getTracker().getId());
+            statement.setInt(3, item.getTracked().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -78,11 +78,11 @@ public class JDBCUserRequestDao implements UserRequestDao {
     }
 
     @Override
-    public void delete(UserRequest item) {
+    public void delete(Request item) {
         try (PreparedStatement statement = connection.prepareStatement
                 ("delete from request where user_id = ? & activity_id = ?")) {
-            statement.setInt(1, item.getUser().getId());
-            statement.setInt(2, item.getActivity().getId());
+            statement.setInt(1, item.getTracker().getId());
+            statement.setInt(2, item.getTracked().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

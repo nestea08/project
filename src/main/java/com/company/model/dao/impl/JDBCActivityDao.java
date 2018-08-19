@@ -39,7 +39,7 @@ public class JDBCActivityDao implements ActivityDao {
             while(set.next()) {
                 activity = activityMapper.extractFromResultSet(set);
                 activity = activityMapper.makeUnique(activities, activity);
-                activity.addTrackerUser(trackerUserMapper.extractFromResultSet(set));
+                activity.addTracker(trackerUserMapper.extractFromResultSet(set));
             }
             return activity;
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class JDBCActivityDao implements ActivityDao {
                 activity = activityMapper.makeUnique(activities, activity);
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
-                activity.addTrackerUser(user);
+                activity.addTracker(user);
                 result.add(activity);
             }
         } catch (SQLException e) {

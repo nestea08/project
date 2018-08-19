@@ -3,6 +3,8 @@ package com.company.model.dao.impl;
 import com.company.model.dao.*;
 import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
+import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.Tracker;
 
 import java.sql.*;
 import java.util.*;
@@ -36,7 +38,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
             while(set.next()) {
                 trackerUser = (TrackerUser) userMapper.extractFromResultSet(set);
                 trackerUser = (TrackerUser) userMapper.makeUnique(users, trackerUser);
-                trackerUser.addActivity(activityMapper.extractFromResultSet(set));
+                trackerUser.addTracked(activityMapper.extractFromResultSet(set));
             }
             return trackerUser;
         } catch (SQLException e) {
@@ -58,7 +60,8 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 activity = activityMapper.makeUnique(activities, activity);
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
-                user.addActivity(activity);
+                int spentTime = set.getInt("spent_time");
+                user.setSpentTimeOnTracked(activity, spentTime);
                 result.add(user);
             }
         } catch (SQLException e) {
@@ -86,12 +89,12 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     }
 
     @Override
-    public void updateSpentTime(TrackerUser trackerUser, Activity activity) {
+    public void updateSpentTime(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
                 ("update user_activity set spent_time = ? where user_id = ? & activity_id = ?")) {
-            statement.setInt(1, trackerUser.getSpentTimeOnActivity(activity));
-            statement.setInt(2, trackerUser.getId());
-            statement.setInt(3, activity.getId());
+            statement.setInt(1, tracker.getSpentTimeOnTracked(tracked));
+            statement.setInt(2, tracker.getId());
+            statement.setInt(3, tracked.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -99,11 +102,11 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     }
 
     @Override
-    public void addActivityToTrackerUser(TrackerUser trackerUser, Activity activity) {
+    public void addTrackedToTracker(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
                 ("insert into user_activity (user_id, activity_id) values(?, ?)")) {
-            statement.setInt(1, trackerUser.getId());
-            statement.setInt(2, activity.getId());
+            statement.setInt(1, tracker.getId());
+            statement.setInt(2, tracked.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -111,11 +114,11 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     }
 
     @Override
-    public void removeActivityFromTrackerUser(TrackerUser trackerUser, Activity activity) {
+    public void removeTrackedFromTracker(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
                 ("delete from user_activity where user_id = ? & activity_id = ?")) {
-            statement.setInt(1, trackerUser.getId());
-            statement.setInt(2, activity.getId());
+            statement.setInt(1, tracker.getId());
+            statement.setInt(2, tracked.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

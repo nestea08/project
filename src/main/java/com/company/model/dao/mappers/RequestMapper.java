@@ -2,16 +2,16 @@ package com.company.model.dao.mappers;
 
 import com.company.model.entities.Activity;
 import com.company.model.entities.TrackerUser;
-import com.company.model.entities.UserRequest;
+import com.company.model.entities.Request;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class RequestMapper implements GenericMapper<UserRequest>{
+public class RequestMapper implements GenericMapper<Request>{
 
     @Override
-    public UserRequest extractFromResultSet(ResultSet set) throws SQLException {
+    public Request extractFromResultSet(ResultSet set) throws SQLException {
         return extractWithSpecifiedReferences(set, getTrackerUser(set), getActivity(set));
     }
 
@@ -25,17 +25,17 @@ public class RequestMapper implements GenericMapper<UserRequest>{
         return mapper.extractFromResultSet(set);
     }
 
-    public UserRequest extractWithSpecifiedReferences(ResultSet set, TrackerUser trackerUser, Activity activity)
+    public Request extractWithSpecifiedReferences(ResultSet set, TrackerUser trackerUser, Activity activity)
             throws SQLException {
         int id = set.getInt("request_id");
         String type = set.getString("command");
-        UserRequest.RequestType requestType = type.equals("ADD") ?
-                UserRequest.RequestType.ADD : UserRequest.RequestType.REMOVE;
-        return new UserRequest(id, trackerUser, activity, requestType);
+        Request.RequestType requestType = type.equals("ADD") ?
+                Request.RequestType.ADD : Request.RequestType.REMOVE;
+        return new Request(id, trackerUser, activity, requestType);
     }
 
     @Override
-    public UserRequest makeUnique(Map<Integer, UserRequest> cache, UserRequest item) {
+    public Request makeUnique(Map<Integer, Request> cache, Request item) {
         cache.putIfAbsent(item.getId(), item);
         return cache.get(item.getId());
     }

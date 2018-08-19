@@ -1,36 +1,38 @@
 package com.company.model.entities;
 
+import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.Tracker;
+
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-public class Activity {
+public class Activity implements Tracked {
     private int id;
     private String title;
     private String description;
-    private Set<TrackerUser> trackerUsers;
+    private Set<Tracker> trackers;
 
     public Activity(String title, String description) {
-        this(0, title, description);
+        this.title = title;
+        this.description = description;
+        trackers = new HashSet<>();
     }
 
     public Activity(int id, String title, String description) {
+        this(title, description);
         this.id = id;
-        this.title = title;
-        this.description = description;
-        trackerUsers = new HashSet<>();
     }
 
-    public void addTrackerUser(TrackerUser trackerUser) {
-        trackerUsers.add(trackerUser);
+    public void addTracker(Tracker tracker) {
+        trackers.add(tracker);
     }
 
-    public void removeTrackerUser(TrackerUser trackerUser) {
-        trackerUsers.remove(trackerUser);
+    public void removeTracker(Tracker tracker) {
+        trackers.remove(tracker);
     }
 
-    public Set<TrackerUser> getTrackerUsers() {
-        return new HashSet<>(trackerUsers);
+    public Set<Tracker> getTrackers() {
+        return new HashSet<>(trackers);
     }
 
     public int getId() {

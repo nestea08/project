@@ -1,7 +1,7 @@
 package com.company.model.dao;
 
-import com.company.model.entities.UserRequest;
+import com.company.model.entities.Request;
 
 public interface UserRequestDao
-        extends GenericDao<UserRequest> {
+        extends GenericDao<Request> {
 }
