@@ -11,6 +11,7 @@ import java.util.*;
 
 public class JDBCTrackerUserDao implements TrackerUserDao {
     private Connection connection;
+    private ResourceBundle bundle = DaoFactory.getBundle();
 
     JDBCTrackerUserDao(Connection connection) {
         this.connection = connection;
@@ -31,7 +32,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
         ActivityMapper activityMapper = new ActivityMapper();
         UserMapper userMapper = new UserMapper();
         try (PreparedStatement statement = connection.prepareStatement
-                ("select * from users left join user_activity using(user_id) left join activities using(activity_id) where user_id = ?")) {
+                (bundle.getString("tracker.findById"))) {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             TrackerUser trackerUser = null;
@@ -54,7 +55,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
         ActivityMapper activityMapper = new ActivityMapper();
         TrackerUserMapper trackerUserMapper = new TrackerUserMapper();
         try (Statement statement = connection.createStatement()) {
-            ResultSet set = statement.executeQuery("select * from users left join user_activity using(user_id) left join activities using(activity_id)");
+            ResultSet set = statement.executeQuery(bundle.getString("tracker.findAll"));
             while (set.next()) {
                 Activity activity = activityMapper.extractFromResultSet(set);
                 activity = activityMapper.makeUnique(activities, activity);
@@ -91,7 +92,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     @Override
     public void updateSpentTime(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("update user_activity set spent_time = ? where user_id = ? & activity_id = ?")) {
+                (bundle.getString("tracker.updateTime"))) {
             statement.setInt(1, tracker.getSpentTimeOnTracked(tracked));
             statement.setInt(2, tracker.getId());
             statement.setInt(3, tracked.getId());
@@ -104,7 +105,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     @Override
     public void addTrackedToTracker(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("insert into user_activity (user_id, activity_id) values(?, ?)")) {
+                (bundle.getString("tracker.addTracked"))) {
             statement.setInt(1, tracker.getId());
             statement.setInt(2, tracked.getId());
             statement.executeUpdate();
@@ -116,7 +117,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     @Override
     public void removeTrackedFromTracker(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("delete from user_activity where user_id = ? & activity_id = ?")) {
+                (bundle.getString("tracker.removeTracked"))) {
             statement.setInt(1, tracker.getId());
             statement.setInt(2, tracked.getId());
             statement.executeUpdate();

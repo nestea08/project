@@ -1,6 +1,7 @@
 package com.company.model.dao.impl;
 
 import com.company.model.dao.ActivityDao;
+import com.company.model.dao.DaoFactory;
 import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
 
@@ -9,6 +10,7 @@ import java.util.*;
 
 public class JDBCActivityDao implements ActivityDao {
     private Connection connection;
+    private ResourceBundle bundle = DaoFactory.getBundle();
 
     JDBCActivityDao(Connection connection) {
         this.connection = connection;
@@ -17,7 +19,7 @@ public class JDBCActivityDao implements ActivityDao {
     @Override
     public void create(Activity item) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("insert into activities (title, description) values (?, ?)")) {
+                (bundle.getString("activity.create"))) {
             statement.setString(1, item.getTitle());
             statement.setString(2, item.getDescription());
             statement.executeUpdate();
@@ -32,7 +34,7 @@ public class JDBCActivityDao implements ActivityDao {
         ActivityMapper activityMapper = new ActivityMapper();
         TrackerUserMapper trackerUserMapper = new TrackerUserMapper();
         try (PreparedStatement statement = connection.prepareStatement
-                ("select * from activities left join user_activity using(activity_id) left join users using(user_id) where activity_id = ?")) {
+                (bundle.getString("activity.findById"))) {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             Activity activity = null;
@@ -55,7 +57,7 @@ public class JDBCActivityDao implements ActivityDao {
         ActivityMapper activityMapper = new ActivityMapper();
         TrackerUserMapper trackerUserMapper = new TrackerUserMapper();
         try (Statement statement = connection.createStatement()) {
-            ResultSet set = statement.executeQuery("select * from activities left join user_activity using(activity_id) left join users using(user_id)");
+            ResultSet set = statement.executeQuery(bundle.getString("activity.findAll"));
             while (set.next()) {
                 Activity activity = activityMapper.extractFromResultSet(set);
                 activity = activityMapper.makeUnique(activities, activity);
@@ -73,7 +75,7 @@ public class JDBCActivityDao implements ActivityDao {
     @Override
     public void update(Activity item) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("update activities set title = ?, description = ? where activity_id = ?")) {
+                (bundle.getString("activity.update"))) {
             statement.setString(1, item.getTitle());
             statement.setString(2, item.getDescription());
             statement.setInt(3, item.getId());
@@ -86,7 +88,7 @@ public class JDBCActivityDao implements ActivityDao {
     @Override
     public void delete(Activity item) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("delete from activities where activity_id = ?")) {
+                (bundle.getString("activity.delete"))) {
             statement.setInt(1, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {

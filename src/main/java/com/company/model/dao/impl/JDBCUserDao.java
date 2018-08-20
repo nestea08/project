@@ -1,5 +1,6 @@
 package com.company.model.dao.impl;
 
+import com.company.model.dao.DaoFactory;
 import com.company.model.dao.UserDao;
 import com.company.model.dao.mappers.UserMapper;
 import com.company.model.entities.User;
@@ -7,9 +8,11 @@ import com.company.model.entities.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
+    private ResourceBundle bundle = DaoFactory.getBundle();
 
     JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -18,7 +21,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void create(User item) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("insert into users (nickname, login, password, role) values (?, ?, ?, ?)")) {
+                (bundle.getString("user.create"))) {
             statement.setString(1, item.getNickname());
             statement.setString(2, item.getLogin());
             statement.setString(3, item.getPassword());
@@ -33,9 +36,10 @@ public class JDBCUserDao implements UserDao {
     public User findById(int id) {
         UserMapper userMapper = new UserMapper();
         try (PreparedStatement statement = connection.prepareStatement
-                ("select * from users where user_id = ?")) {
+                (bundle.getString("user.findById"))) {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
+            set.next();
             return userMapper.extractFromResultSet(set);
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -47,7 +51,7 @@ public class JDBCUserDao implements UserDao {
         List<User> result = new ArrayList<>();
         UserMapper userMapper = new UserMapper();
         try (Statement statement = connection.createStatement()) {
-            ResultSet set = statement.executeQuery("select * from users");
+            ResultSet set = statement.executeQuery(bundle.getString("user.findAll"));
             while (set.next()) {
                 result.add(userMapper.extractFromResultSet(set));
             }
@@ -61,10 +65,11 @@ public class JDBCUserDao implements UserDao {
     public User findUserByLoginAndPassword(String login, String password) {
         UserMapper userMapper = new UserMapper();
         try (PreparedStatement statement = connection.prepareStatement
-                ("select * from users where login = ? & password = ?")) {
+                (bundle.getString("user.findByLogAndPas"))) {
             statement.setString(1, login);
             statement.setString(2, password);
             ResultSet set = statement.executeQuery();
+            set.next();
             return userMapper.extractFromResultSet(set);
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -74,7 +79,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void update(User item) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("update users set nickname = ?, login = ?, password = ? where user_id = ?")) {
+                (bundle.getString("user.update"))) {
             statement.setString(1, item.getNickname());
             statement.setString(2, item.getLogin());
             statement.setString(3, item.getPassword());
@@ -88,7 +93,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public void delete(User item) {
         try (PreparedStatement statement = connection.prepareStatement
-                ("delete from users where user_id = ?")) {
+                (bundle.getString("user.delete"))) {
             statement.setInt(1, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
