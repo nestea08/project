@@ -1,4 +1,4 @@
-package com.company.model.services.users;
+package com.company.model.services.guests;
 
 import com.company.model.entities.TrackerUser;
 import com.company.model.entities.User;

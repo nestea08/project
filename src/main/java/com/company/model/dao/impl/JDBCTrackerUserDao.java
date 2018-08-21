@@ -28,18 +28,21 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
 
     @Override
     public TrackerUser findById(int id) {
-        Map<Integer, User> users = new HashMap<>();
+        Map<Integer, TrackerUser> users = new HashMap<>();
         ActivityMapper activityMapper = new ActivityMapper();
-        UserMapper userMapper = new UserMapper();
+        TrackerUserMapper trackerUserMapper = new TrackerUserMapper();
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("tracker.findById"))) {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             TrackerUser trackerUser = null;
             while(set.next()) {
-                trackerUser = (TrackerUser) userMapper.extractFromResultSet(set);
-                trackerUser = (TrackerUser) userMapper.makeUnique(users, trackerUser);
-                trackerUser.addTracked(activityMapper.extractFromResultSet(set));
+                trackerUser = trackerUserMapper.extractFromResultSet(set);
+                trackerUser = trackerUserMapper.makeUnique(users, trackerUser);
+                Activity activity = activityMapper.extractFromResultSet(set);
+                trackerUser.addTracked(activity);
+                int spentTime = set.getInt("spent_time");
+                trackerUser.setSpentTime(activity, spentTime);
             }
             return trackerUser;
         } catch (SQLException e) {
@@ -62,7 +65,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
                 int spentTime = set.getInt("spent_time");
-                user.setSpentTimeOnTracked(activity, spentTime);
+                user.setSpentTime(activity, spentTime);
                 result.add(user);
             }
         } catch (SQLException e) {
@@ -93,7 +96,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     public void updateSpentTime(Tracker tracker, Tracked tracked) {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("tracker.updateTime"))) {
-            statement.setInt(1, tracker.getSpentTimeOnTracked(tracked));
+            statement.setInt(1, tracker.getSpentTime(tracked));
             statement.setInt(2, tracker.getId());
             statement.setInt(3, tracked.getId());
             statement.executeUpdate();

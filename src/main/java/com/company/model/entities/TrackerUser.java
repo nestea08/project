@@ -40,24 +40,24 @@ public class TrackerUser extends User implements Tracker{
         trackedItems.remove(tracked);
     }
 
-    public Tracked getTrackedById(int id) {
-        Optional<Tracked> trackedOptional = trackedItems.keySet().stream().
-                filter(item -> item.getId() == id).findFirst();
+    public Map.Entry<Tracked, Integer> getTrackedById(int id) {
+        Optional<Map.Entry<Tracked, Integer>> trackedOptional = trackedItems.entrySet().stream().
+                filter(entry -> entry.getKey().getId() == id).findFirst();
         if (!trackedOptional.isPresent()) {
             throw new RuntimeException();
         }
         return trackedOptional.get();
     }
 
-    public Set<Tracked> getAllTracked() {
-        return trackedItems.keySet();
+    public Map<Tracked, Integer> getTrackedItems() {
+        return trackedItems;
     }
 
-    public void setSpentTimeOnTracked(Tracked tracked, Integer spentTime) {
+    public void setSpentTime(Tracked tracked, Integer spentTime) {
         trackedItems.put(tracked, spentTime);
     }
 
-    public Integer getSpentTimeOnTracked(Tracked tracked) {
+    public Integer getSpentTime(Tracked tracked) {
         return trackedItems.get(tracked);
     }
 }

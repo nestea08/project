@@ -1,6 +1,5 @@
-package com.company.model.services.users;
+package com.company.model.services.guests;
 
-import com.company.model.dao.DaoFactory;
 import com.company.model.dao.UserDao;
 import com.company.model.dao.impl.JDBCDaoFactory;
 import com.company.model.entities.User;
@@ -21,6 +20,7 @@ public class UsersUtils {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {
             return dao.findUserByLoginAndPassword(login, password);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }

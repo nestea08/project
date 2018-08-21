@@ -1,4 +1,4 @@
-package com.company.model.services.trackers;
+package com.company.model.services.users;
 
 import com.company.model.entities.*;
 

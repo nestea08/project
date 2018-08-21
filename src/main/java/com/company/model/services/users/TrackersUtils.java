@@ -1,4 +1,4 @@
-package com.company.model.services.trackers;
+package com.company.model.services.users;
 
 import com.company.model.dao.*;
 import com.company.model.dao.impl.JDBCDaoFactory;
@@ -35,6 +35,22 @@ public class TrackersUtils {
     public void createUserRequest(Request request) {
         try (UserRequestDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
             dao.create(request);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void removeTrackedFromTracker(Tracker tracker, Tracked tracked) {
+        try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
+            dao.removeTrackedFromTracker(tracker, tracked);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void createHistoryItem(HistoryItem item) {
+        try (HistoryItemDao dao = JDBCDaoFactory.getInstance().createHistoryItemDao()) {
+            dao.create(item);
         } catch (Exception e) {
             throw new RuntimeException();
         }

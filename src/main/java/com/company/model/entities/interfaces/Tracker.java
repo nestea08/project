@@ -1,5 +1,6 @@
 package com.company.model.entities.interfaces;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface Tracker {
@@ -9,11 +10,11 @@ public interface Tracker {
 
     void removeTracked(Tracked item);
 
-    Set<Tracked> getAllTracked();
+    Map<Tracked, Integer> getTrackedItems();
 
-    Tracked getTrackedById(int id);
+    Map.Entry<Tracked, Integer> getTrackedById(int id);
 
-    Integer getSpentTimeOnTracked(Tracked tracked);
+    Integer getSpentTime(Tracked tracked);
 
-    void setSpentTimeOnTracked(Tracked tracked, Integer time);
+    void setSpentTime(Tracked tracked, Integer time);
 }

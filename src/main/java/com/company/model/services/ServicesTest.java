@@ -1,17 +1,18 @@
 package com.company.model.services;
 
-import com.company.model.dao.DaoFactory;
 import com.company.model.entities.*;
+import com.company.model.entities.interfaces.Tracked;
 import com.company.model.exceptions.NotUniqueNicknameException;
 import com.company.model.services.admins.AdminsUtils;
 import com.company.model.services.admins.RequestProcessingService;
-import com.company.model.services.trackers.*;
 import com.company.model.services.users.*;
+import com.company.model.services.guests.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -31,7 +32,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void signInServiceFindUserTest() {
+    public void signInServiceFindUserTest() throws Exception {
         when(usersUtils.getUserByLoginAndPassword("user@mail.ru", "1111")).
                 thenReturn(testingUser);
         SignInService service = new SignInService(usersUtils);
@@ -62,7 +63,7 @@ public class ServicesTest {
         testingUser.addTracked(testingActivity);
         when(trackersUtils.getTrackerUserById(1)).thenReturn(testingUser);
         service.trackTime(1, 1, 10);
-        Assert.assertEquals(testingUser.getSpentTimeOnTracked(testingActivity).intValue(), 10);
+        Assert.assertEquals(testingUser.getSpentTime(testingActivity).intValue(), 10);
         verify(trackersUtils, times(1)).updateSpentTime(testingUser, testingActivity);
     }
 
@@ -93,4 +94,10 @@ public class ServicesTest {
         verify(adminsUtils,times(1)).deleteUserRequest(request);
     }
 
+    @Test
+    public void test() throws Exception {
+        TimeTrackingService service = new TimeTrackingService();
+        service.finishTracking(1,3);
+
+    }
 }
