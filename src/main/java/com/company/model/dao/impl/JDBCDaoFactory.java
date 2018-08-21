@@ -30,6 +30,11 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCUserRequestDao(getConnection());
     }
 
+    @Override
+    public HistoryItemDao createHistoryItemDao() {
+        return new JDBCHistoryItemDao(getConnection());
+    }
+
     private Connection getConnection(){
         try {
             return dataSource.getConnection();
