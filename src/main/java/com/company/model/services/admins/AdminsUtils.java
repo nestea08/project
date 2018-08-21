@@ -1,30 +1,30 @@
 package com.company.model.services.admins;
 
-import com.company.model.dao.DaoFactory;
 import com.company.model.dao.HistoryItemDao;
 import com.company.model.dao.TrackerUserDao;
 import com.company.model.dao.UserRequestDao;
 import com.company.model.dao.impl.JDBCDaoFactory;
+import com.company.model.entities.Activity;
 import com.company.model.entities.HistoryItem;
 import com.company.model.entities.Request;
-import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 
 import java.util.List;
 
 public class AdminsUtils {
 
-    public void addTrackedToTracker(Tracker tracker, Tracked tracked) {
+    public void addActivityToTracker(Tracker tracker, Activity activity) {
         try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
-            dao.addTrackedToTracker(tracker, tracked);
+            dao.addActivityToTracker(tracker, activity);
         } catch (Exception e) {
             throw new RuntimeException();
         }
     }
 
-    public void removeTrackedFromTracker(Tracker tracker, Tracked tracked) {
+    public void removeActivityFromTracker(Tracker tracker, Activity activity) {
         try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
-            dao.removeTrackedFromTracker(tracker, tracked);
+            dao.removeActivityFromTracker(tracker, activity);
         } catch (Exception e) {
             throw new RuntimeException();
         }

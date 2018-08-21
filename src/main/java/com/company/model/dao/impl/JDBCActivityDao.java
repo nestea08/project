@@ -37,13 +37,8 @@ public class JDBCActivityDao implements ActivityDao {
                 (bundle.getString("activity.findById"))) {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
-            Activity activity = null;
-            while(set.next()) {
-                activity = activityMapper.extractFromResultSet(set);
-                activity = activityMapper.makeUnique(activities, activity);
-                activity.addTracker(trackerUserMapper.extractFromResultSet(set));
-            }
-            return activity;
+            set.next();
+            return activityMapper.extractFromResultSet(set);
         } catch (SQLException e) {
             throw new RuntimeException();
         }
@@ -52,19 +47,11 @@ public class JDBCActivityDao implements ActivityDao {
     @Override
     public List<Activity> findAll() {
         List<Activity> result = new ArrayList<>();
-        Map<Integer, TrackerUser> users = new HashMap<>();
-        Map<Integer, Activity> activities = new HashMap<>();
         ActivityMapper activityMapper = new ActivityMapper();
-        TrackerUserMapper trackerUserMapper = new TrackerUserMapper();
         try (Statement statement = connection.createStatement()) {
             ResultSet set = statement.executeQuery(bundle.getString("activity.findAll"));
             while (set.next()) {
-                Activity activity = activityMapper.extractFromResultSet(set);
-                activity = activityMapper.makeUnique(activities, activity);
-                TrackerUser user = trackerUserMapper.extractFromResultSet(set);
-                user = trackerUserMapper.makeUnique(users, user);
-                activity.addTracker(user);
-                result.add(activity);
+                result.add(activityMapper.extractFromResultSet(set));
             }
         } catch (SQLException e) {
             throw new RuntimeException();

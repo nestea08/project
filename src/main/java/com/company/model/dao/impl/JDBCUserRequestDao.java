@@ -21,7 +21,7 @@ public class JDBCUserRequestDao implements UserRequestDao {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("request.create"))) {
             statement.setInt(1, item.getTracker().getId());
-            statement.setInt(2, item.getTracked().getId());
+            statement.setInt(2, item.getActivity().getId());
             statement.setString(3, item.getType().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -58,7 +58,7 @@ public class JDBCUserRequestDao implements UserRequestDao {
                 activity = activityMapper.makeUnique(activities, activity);
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
-                user.addTracked(activity);
+                user.addTrackedItem(activity);
                 result.add(requestMapper.extractWithSpecifiedReferences(set, user, activity));
             }
         } catch (SQLException e) {
@@ -73,7 +73,7 @@ public class JDBCUserRequestDao implements UserRequestDao {
                 (bundle.getString("request.update"))) {
             statement.setString(1, item.getType().toString());
             statement.setInt(2, item.getTracker().getId());
-            statement.setInt(3, item.getTracked().getId());
+            statement.setInt(3, item.getActivity().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -85,7 +85,7 @@ public class JDBCUserRequestDao implements UserRequestDao {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("request.delete"))) {
             statement.setInt(1, item.getTracker().getId());
-            statement.setInt(2, item.getTracked().getId());
+            statement.setInt(2, item.getActivity().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

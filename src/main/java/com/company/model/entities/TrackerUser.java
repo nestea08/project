@@ -1,13 +1,13 @@
 package com.company.model.entities;
 
 
-import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 
 import java.util.*;
 
 public class TrackerUser extends User implements Tracker{
-    private Map<Tracked, Integer> trackedItems;
+    private List<TrackedItem> trackedItems;
 
     public static class Builder extends User.Builder {
         public Builder(String nickname, String login, String password) {
@@ -29,35 +29,28 @@ public class TrackerUser extends User implements Tracker{
 
     private TrackerUser(Builder builder) {
         super(builder);
-        trackedItems = new HashMap<>();
+        trackedItems = new ArrayList<>();
     }
 
-    public void addTracked(Tracked tracked) {
-        trackedItems.put(tracked, 0);
+    public void addTrackedItem(TrackedItem trackedItem) {
+        trackedItems.add(trackedItem);
     }
 
-    public void removeTracked(Tracked tracked) {
-        trackedItems.remove(tracked);
+    public void removeTrackedItem(TrackedItem trackedItem) {
+        trackedItems.remove(trackedItem);
     }
 
-    public Map.Entry<Tracked, Integer> getTrackedById(int id) {
-        Optional<Map.Entry<Tracked, Integer>> trackedOptional = trackedItems.entrySet().stream().
-                filter(entry -> entry.getKey().getId() == id).findFirst();
+    public TrackedItem getTrackedItemById(int id) {
+        Optional<TrackedItem> trackedOptional = trackedItems.stream().
+                filter(item -> item.getId() == id).findFirst();
         if (!trackedOptional.isPresent()) {
             throw new RuntimeException();
         }
         return trackedOptional.get();
     }
 
-    public Map<Tracked, Integer> getTrackedItems() {
+    public List<TrackedItem> getTrackedItems() {
         return trackedItems;
     }
 
-    public void setSpentTime(Tracked tracked, Integer spentTime) {
-        trackedItems.put(tracked, spentTime);
-    }
-
-    public Integer getSpentTime(Tracked tracked) {
-        return trackedItems.get(tracked);
-    }
 }

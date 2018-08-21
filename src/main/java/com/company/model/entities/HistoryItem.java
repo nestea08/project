@@ -1,11 +1,11 @@
 package com.company.model.entities;
 
-import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 
 import java.time.LocalDate;
 
-public class HistoryItem implements Tracked {
+public class HistoryItem implements TrackedItem {
     private int id;
     private Tracker tracker;
     private String title;

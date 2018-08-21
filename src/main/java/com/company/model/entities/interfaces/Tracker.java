@@ -1,20 +1,16 @@
 package com.company.model.entities.interfaces;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 public interface Tracker {
     int getId();
 
-    void addTracked(Tracked item);
+    void addTrackedItem(TrackedItem item);
 
-    void removeTracked(Tracked item);
+    void removeTrackedItem(TrackedItem item);
 
-    Map<Tracked, Integer> getTrackedItems();
+    List<TrackedItem> getTrackedItems();
 
-    Map.Entry<Tracked, Integer> getTrackedById(int id);
+    TrackedItem getTrackedItemById(int id);
 
-    Integer getSpentTime(Tracked tracked);
-
-    void setSpentTime(Tracked tracked, Integer time);
 }

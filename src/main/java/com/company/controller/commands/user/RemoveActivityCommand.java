@@ -11,7 +11,7 @@ public class RemoveActivityCommand implements Command {
     public String execute(HttpServletRequest request) {
         RequestsSaverService service = new RequestsSaverService();
         int activityId = Integer.parseInt(request.getParameter("id"));
-        int userId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
+        int userId = UserCommandUtils.getUserIdFromSession(request.getSession());
         service.saveTrackerUserRequest(userId, activityId, Request.RequestType.REMOVE);
         return "/user/remove.jsp";
     }

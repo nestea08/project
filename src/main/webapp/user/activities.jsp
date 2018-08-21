@@ -21,13 +21,13 @@
     <fmt:message key="activities.hello"/>:<br/>
 
     <form action="" method="post">
-    <c:forEach items="${requestScope.activities}" var="map">
+    <c:forEach items="${requestScope.trackedItems}" var="trackedItem">
         <ul>
-            <li><c:out value="${map.key.title}"/></li>
-            <li><c:out value="${map.key.description}"/></li>
-            <li><c:out value="${map.value}"/></li>
-            <a href="${pageContext.request.contextPath}/user/activity?id=${map.key.id}"> <fmt:message key="activities.more"/></a>
-            <a href="${pageContext.request.contextPath}/user/activity_remove?id=${map.key.id}"> <fmt:message key="activities.remove"/></a>
+            <li><c:out value="${trackedItem.title}"/></li>
+            <li><c:out value="${trackedItem.description}"/></li>
+            <li><c:out value="${trackedItem.spentTime}"/></li>
+            <a href="${pageContext.request.contextPath}/user/activity?id=${trackedItem.id}"> <fmt:message key="activities.more"/></a>
+            <a href="${pageContext.request.contextPath}/user/activity_remove?id=${trackedItem.id}"> <fmt:message key="activities.remove"/></a>
         </ul>
     </c:forEach>
     </form>

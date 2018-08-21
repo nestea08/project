@@ -3,7 +3,7 @@ package com.company.model.services.users;
 import com.company.model.dao.*;
 import com.company.model.dao.impl.JDBCDaoFactory;
 import com.company.model.entities.*;
-import com.company.model.entities.interfaces.Tracked;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 
 public class TrackersUtils {
@@ -24,9 +24,9 @@ public class TrackersUtils {
         }
     }
 
-    public void updateSpentTime(Tracker tracker, Tracked tracked) {
+    public void updateSpentTime(Tracker tracker, TrackedItem trackedItem) {
         try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
-            dao.updateSpentTime(tracker, tracked);
+            dao.updateSpentTime(tracker, trackedItem);
         } catch (Exception e) {
             throw new RuntimeException();
         }
@@ -40,9 +40,9 @@ public class TrackersUtils {
         }
     }
 
-    public void removeTrackedFromTracker(Tracker tracker, Tracked tracked) {
+    public void removeTrackedFromTracker(Tracker tracker, TrackedItem trackedItem) {
         try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
-            dao.removeTrackedFromTracker(tracker, tracked);
+            dao.removeActivityFromTracker(tracker, trackedItem);
         } catch (Exception e) {
             throw new RuntimeException();
         }

@@ -30,11 +30,11 @@ public class RequestProcessingService {
     }
 
     private void addActivity(Request request) {
-        utils.addTrackedToTracker(request.getTracker(), request.getTracked());
+        utils.addActivityToTracker(request.getTracker(), request.getActivity());
     }
 
     private void deleteActivity(Request request) {
-        utils.removeTrackedFromTracker(request.getTracker(), request.getTracked());
+        utils.removeActivityFromTracker(request.getTracker(), request.getActivity());
     }
 
 }

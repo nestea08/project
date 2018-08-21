@@ -16,16 +16,16 @@
     <title>Time Tracking</title>
 </head>
 <body>
-    <c:out value="${requestScope.activity.title}"/><br/>
-    <c:out value="${requestScope.activity.description}"/><br/>
-    <c:out value="${requestScope.timeSpent}"/><br/>
+    <c:out value="${requestScope.trackedItem.title}"/><br/>
+    <c:out value="${requestScope.trackedItem.description}"/><br/>
+    <c:out value="${requestScope.trackedItem.timeSpent}"/><br/>
 
     <form action="" method="post">
         Add spent time on activity<br/>
         <input type="number" name="spentTime"/>
         <input type="submit" value="Change"/>
     </form>
-    <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.activity.id}"> <fmt:message key="activity.finish"/></a>
+    <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.trackedItem.id}"> <fmt:message key="activity.finish"/></a>
 
 </body>
 </html>

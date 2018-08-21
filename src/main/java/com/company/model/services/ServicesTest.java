@@ -1,7 +1,6 @@
 package com.company.model.services;
 
 import com.company.model.entities.*;
-import com.company.model.entities.interfaces.Tracked;
 import com.company.model.exceptions.NotUniqueNicknameException;
 import com.company.model.services.admins.AdminsUtils;
 import com.company.model.services.admins.RequestProcessingService;
@@ -12,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -60,7 +58,7 @@ public class ServicesTest {
     @Test
     public void timeTrackingServiceTrackTimeTest() {
         TimeTrackingService service = new TimeTrackingService(trackersUtils);
-        testingUser.addTracked(testingActivity);
+        testingUser.addTrackedItem(testingActivity);
         when(trackersUtils.getTrackerUserById(1)).thenReturn(testingUser);
         service.trackTime(1, 1, 10);
         Assert.assertEquals(testingUser.getSpentTime(testingActivity).intValue(), 10);
@@ -82,7 +80,7 @@ public class ServicesTest {
         RequestProcessingService service = new RequestProcessingService(adminsUtils);
         when(adminsUtils.getUserRequestById(1)).thenReturn(new Request(testingUser, testingActivity, Request.RequestType.ADD));
         service.executeUserRequest(1);
-        verify(adminsUtils,times(1)).addTrackedToTracker(testingUser, testingActivity);
+        verify(adminsUtils,times(1)).addActivityToTracker(testingUser, testingActivity);
     }
 
     @Test
