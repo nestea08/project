@@ -19,6 +19,9 @@ public class Paginator<T> {
     private int calculatePagesCount() {
         int itemsCount = items.size();
         int pagesCount = itemsCount / itemsPerPage;
+        if (pagesCount == 0) {
+            return pagesCount;
+        }
         return isNecessaryIncompletePage(itemsCount, pagesCount) ? pagesCount + 1 : pagesCount;
     }
 

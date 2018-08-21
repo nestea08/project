@@ -18,21 +18,21 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse)servletResponse;
         User.Role role = (User.Role)req.getSession().getAttribute("role");
-        if (hasNotNecessaryRole(req.getRequestURI(), role)) {
+        if (hasNotNecessaryAccess(req.getRequestURI(), role)) {
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private boolean hasNotNecessaryRole(String uri, User.Role role) {
-        return isNotAdmin(uri, role) || isNotUser(uri, role);
+    private boolean hasNotNecessaryAccess(String uri, User.Role role) {
+        return tryingToBecomeAdmin(uri, role) || tryingToBecomeUser(uri, role);
     }
 
-    private boolean isNotAdmin(String uri, User.Role role) {
+    private boolean tryingToBecomeAdmin(String uri, User.Role role) {
         return uri.contains("/admin/") && role != User.Role.ADMIN;
     }
 
-    private boolean isNotUser(String uri, User.Role role) {
+    private boolean tryingToBecomeUser(String uri, User.Role role) {
         return uri.contains("/user/") && role != User.Role.USER;
     }
 

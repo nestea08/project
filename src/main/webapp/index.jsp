@@ -2,8 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=utf-8" %>
 
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : 'en'}" scope="session" />
-
+<jsp:include page="master.jsp" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
 
@@ -12,15 +11,10 @@
     <meta http-equiv="Content-Type" >
 </head>
 <body>
-    <form>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language.equals("en") ? 'selected' : ''}>English</option>
-        <option value="ru" ${language.equals("ru") ? 'selected' : ''}>Russian</option>
-    </select>
-    </form>
-    <fmt:message key="output.hello"/>
 
-    <a href="${pageContext.request.contextPath}/login.jsp">Login</a>
-    <a href="${pageContext.request.contextPath}/data">Login</a>
+
+    <fmt:message key="index.hello"/>
+
+    <a href="${pageContext.request.contextPath}/data">Get data</a>
 </body>
 </html>

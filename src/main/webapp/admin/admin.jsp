@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: vlad
@@ -7,12 +8,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="../master.jsp" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="mybundle"/>
 <html>
 <head>
-    <title></title>
+    <title>Time Tracking</title>
 </head>
 <body>
-Hello admin!
-<a href="${pageContext.request.contextPath}">Logout</a>
+<fmt:message key="admin.hello"/>
 </body>
 </html>

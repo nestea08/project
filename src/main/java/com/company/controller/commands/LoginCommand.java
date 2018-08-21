@@ -1,12 +1,14 @@
 package com.company.controller.commands;
 
 import com.company.model.entities.User;
+import com.company.model.services.guests.SignInService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
+        SignInService service = new SignInService();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -18,17 +20,14 @@ public class LoginCommand implements Command {
             throw new RuntimeException();
         }
 
-        CommandUtils.logUser(request.getServletContext(), login);
+        User user = service.findUser(login, password);
 
-        if (login.equalsIgnoreCase("admin")) {
-            CommandUtils.saveUserInSession(request.getSession(), login, User.Role.ADMIN);
-            request.setAttribute("check", "ok");
-            return request.getContextPath() + "/admin/admin.jsp";
-        } else if (login.equalsIgnoreCase("user")) {
-            CommandUtils.saveUserInSession(request.getSession(), login, User.Role.USER);
-            return request.getContextPath() + "/user/User.jsp";
+        CommandUtils.logUser(request.getServletContext(), user);
+        CommandUtils.saveUserInSession(request.getSession(), user);
+        if (user.getRole() == User.Role.ADMIN) {
+            return request.getContextPath() + "/redirect/admin/admin.jsp";
         } else {
-            return request.getContextPath() + "/index.jsp";
+            return request.getContextPath() + "/redirect/user/User.jsp";
         }
 
     }
