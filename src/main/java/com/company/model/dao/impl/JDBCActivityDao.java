@@ -4,6 +4,7 @@ import com.company.model.dao.ActivityDao;
 import com.company.model.dao.DaoFactory;
 import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
+import com.company.model.entities.interfaces.Tracker;
 
 import java.sql.*;
 import java.util.*;
@@ -77,6 +78,30 @@ public class JDBCActivityDao implements ActivityDao {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("activity.delete"))) {
             statement.setInt(1, item.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void addActivityToTracker(Tracker tracker, Activity activity) {
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("activity.addTracker"))) {
+            statement.setInt(1, tracker.getId());
+            statement.setInt(2, activity.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void removeActivityFromTracker(Tracker tracker, Activity activity) {
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("activity.removeTracker"))) {
+            statement.setInt(1, tracker.getId());
+            statement.setInt(2, activity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

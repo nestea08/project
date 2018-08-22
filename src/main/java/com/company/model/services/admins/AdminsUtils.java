@@ -1,5 +1,6 @@
 package com.company.model.services.admins;
 
+import com.company.model.dao.ActivityDao;
 import com.company.model.dao.HistoryItemDao;
 import com.company.model.dao.TrackerUserDao;
 import com.company.model.dao.UserRequestDao;
@@ -15,7 +16,7 @@ import java.util.List;
 public class AdminsUtils {
 
     public void addActivityToTracker(Tracker tracker, Activity activity) {
-        try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
+        try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             dao.addActivityToTracker(tracker, activity);
         } catch (Exception e) {
             throw new RuntimeException();
@@ -23,7 +24,7 @@ public class AdminsUtils {
     }
 
     public void removeActivityFromTracker(Tracker tracker, Activity activity) {
-        try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
+        try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             dao.removeActivityFromTracker(tracker, activity);
         } catch (Exception e) {
             throw new RuntimeException();

@@ -1,6 +1,7 @@
 package com.company.model.services;
 
 import com.company.model.entities.*;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.exceptions.NotUniqueNicknameException;
 import com.company.model.services.admins.AdminsUtils;
 import com.company.model.services.admins.RequestProcessingService;
@@ -22,11 +23,13 @@ public class ServicesTest {
     private AdminsUtils adminsUtils = mock(AdminsUtils.class);
     private TrackerUser testingUser;
     private Activity testingActivity;
+    private TrackedItem trackedItem;
 
     @Before
     public void init() {
         testingUser = new TrackerUser.Builder("user123", "user@mail.ru", "1111").build();
         testingActivity = new Activity(1, "activity1", "......");
+        trackedItem = new TimeTrackedItem(testingActivity, 0);
     }
 
     @Test
@@ -58,11 +61,10 @@ public class ServicesTest {
     @Test
     public void timeTrackingServiceTrackTimeTest() {
         TimeTrackingService service = new TimeTrackingService(trackersUtils);
-        testingUser.addTrackedItem(testingActivity);
+        testingUser.addTrackedItem(trackedItem);
         when(trackersUtils.getTrackerUserById(1)).thenReturn(testingUser);
         service.trackTime(1, 1, 10);
-        Assert.assertEquals(testingUser.getSpentTime(testingActivity).intValue(), 10);
-        verify(trackersUtils, times(1)).updateSpentTime(testingUser, testingActivity);
+        verify(trackersUtils, times(1)).updateSpentTime(testingUser, trackedItem);
     }
 
     @Test
@@ -94,8 +96,8 @@ public class ServicesTest {
 
     @Test
     public void test() throws Exception {
-        TimeTrackingService service = new TimeTrackingService();
-        service.finishTracking(1,3);
+        SignInService service = new SignInService();
+        service.findUser("admin@gmail.com", "1111");
 
     }
 }

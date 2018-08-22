@@ -5,7 +5,7 @@ import com.company.model.entities.interfaces.Tracker;
 
 import java.time.LocalDate;
 
-public class HistoryItem implements TrackedItem {
+public class HistoryItem{
     private int id;
     private Tracker tracker;
     private String title;
@@ -24,12 +24,10 @@ public class HistoryItem implements TrackedItem {
         this.id = id;
     }
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }

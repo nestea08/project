@@ -18,7 +18,7 @@
 <body>
     <c:out value="${requestScope.trackedItem.title}"/><br/>
     <c:out value="${requestScope.trackedItem.description}"/><br/>
-    <c:out value="${requestScope.trackedItem.timeSpent}"/><br/>
+    <c:out value="${requestScope.trackedItem.spentTime}"/><br/>
 
     <form action="" method="post">
         Add spent time on activity<br/>

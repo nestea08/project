@@ -58,7 +58,6 @@ public class JDBCUserRequestDao implements UserRequestDao {
                 activity = activityMapper.makeUnique(activities, activity);
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
-                user.addTrackedItem(activity);
                 result.add(requestMapper.extractWithSpecifiedReferences(set, user, activity));
             }
         } catch (SQLException e) {

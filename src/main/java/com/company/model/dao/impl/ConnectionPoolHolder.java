@@ -18,7 +18,7 @@ class ConnectionPoolHolder {
                     BasicDataSource ds = new BasicDataSource();
                     ds.setUrl("jdbc:mysql://localhost:3306/projectdb?serverTimezone=UTC");
                     ds.setUsername("root");
-                    ds.setPassword("password");
+                    ds.setPassword("1111");
                     ds.setMinIdle(5);
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);

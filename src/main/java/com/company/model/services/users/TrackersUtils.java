@@ -41,8 +41,9 @@ public class TrackersUtils {
     }
 
     public void removeTrackedFromTracker(Tracker tracker, TrackedItem trackedItem) {
-        try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
-            dao.removeActivityFromTracker(tracker, trackedItem);
+        try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
+            dao.removeActivityFromTracker(tracker,
+                    new Activity(trackedItem.getId(), trackedItem.getTitle(), trackedItem.getDescription()));
         } catch (Exception e) {
             throw new RuntimeException();
         }

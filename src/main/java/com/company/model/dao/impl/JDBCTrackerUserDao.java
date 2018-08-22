@@ -105,30 +105,6 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     }
 
     @Override
-    public void addActivityToTracker(Tracker tracker, Activity activity) {
-        try (PreparedStatement statement = connection.prepareStatement
-                (bundle.getString("tracker.addTracked"))) {
-            statement.setInt(1, tracker.getId());
-            statement.setInt(2, activity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
-
-    @Override
-    public void removeActivityFromTracker(Tracker tracker, Activity activity) {
-        try (PreparedStatement statement = connection.prepareStatement
-                (bundle.getString("tracker.removeTracked"))) {
-            statement.setInt(1, tracker.getId());
-            statement.setInt(2, activity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
-
-    @Override
     public void close() throws Exception {
         try {
             connection.close();
