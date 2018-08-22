@@ -2,14 +2,14 @@ package com.company.controller;
 
 import java.util.List;
 
-public class Paginator<T> {
+public class Pagination<T> {
     private List<T> items;
 
     private int pagesCount;
     private int currentPage;
     private int itemsPerPage;
 
-    public Paginator(List<T> items, int itemsPerPage) {
+    public Pagination(List<T> items, int itemsPerPage) {
         this.items = items;
         this.itemsPerPage = itemsPerPage;
         pagesCount = calculatePagesCount();

@@ -1,12 +1,6 @@
 package com.company.controller.commands;
 
-import com.company.controller.Paginator;
-import com.company.model.entities.User;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class DataCommand implements Command {
     @Override
@@ -25,7 +19,7 @@ public class DataCommand implements Command {
                 new User("qqqqq@gmail.com", "qqqqqq", User.Role.USER),
                 new User("qqqqq@gmail.com", "qqqqqq", User.Role.USER)
         );
-        Paginator<User> paginator = new Paginator<>(guests, 3);
+        Pagination<User> paginator = new Pagination<>(guests, 3);
         String pageParameter = request.getParameter("page");
         if (pageParameter != null) {
             paginator.setCurrentPage(Integer.parseInt(pageParameter));

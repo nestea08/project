@@ -17,5 +17,7 @@
 </head>
 <body>
 <fmt:message key="admin.hello"/>
+<a href="${pageContext.request.contextPath}/admin/requests"><fmt:message key="admin.requests"/></a>
+<a href="${pageContext.request.contextPath}/admin/history"><fmt:message key="admin.history"/></a>
 </body>
 </html>

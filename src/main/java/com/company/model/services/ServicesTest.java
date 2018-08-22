@@ -4,6 +4,7 @@ import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.exceptions.NotUniqueNicknameException;
 import com.company.model.services.admins.AdminsUtils;
+import com.company.model.services.admins.LogsHolderService;
 import com.company.model.services.admins.RequestProcessingService;
 import com.company.model.services.users.*;
 import com.company.model.services.guests.*;
@@ -64,7 +65,7 @@ public class ServicesTest {
         testingUser.addTrackedItem(trackedItem);
         when(trackersUtils.getTrackerUserById(1)).thenReturn(testingUser);
         service.trackTime(1, 1, 10);
-        verify(trackersUtils, times(1)).updateSpentTime(testingUser, trackedItem);
+        verify(trackersUtils, times(1)).updateSpentTime(testingUser, trackedItem.plusSpentTime(10));
     }
 
     @Test
@@ -96,8 +97,7 @@ public class ServicesTest {
 
     @Test
     public void test() throws Exception {
-        SignInService service = new SignInService();
-        service.findUser("admin@gmail.com", "1111");
-
+        LogsHolderService service = new LogsHolderService();
+        service.getLogs();
     }
 }

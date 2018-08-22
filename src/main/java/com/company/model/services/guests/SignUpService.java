@@ -17,10 +17,11 @@ public class SignUpService {
         this.utils = utils;
     }
 
-    public void createUser(String nickname, String login, String password) throws Exception{
+    public User createUser(String nickname, String login, String password) throws Exception{
         User user = new TrackerUser.Builder(nickname, login, password).build();
         checkUserUnique(user);
         utils.createUser(user);
+        return user;
     }
 
     private void checkUserUnique(User user) throws Exception{

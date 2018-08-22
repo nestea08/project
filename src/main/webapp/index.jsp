@@ -11,10 +11,7 @@
     <meta http-equiv="Content-Type" >
 </head>
 <body>
-
-
     <fmt:message key="index.hello"/>
-
     <a href="${pageContext.request.contextPath}/data">Get data</a>
 </body>
 </html>

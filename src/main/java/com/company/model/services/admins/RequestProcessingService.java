@@ -3,6 +3,8 @@ package com.company.model.services.admins;
 
 import com.company.model.entities.Request;
 
+import java.util.List;
+
 public class RequestProcessingService {
     private AdminsUtils utils;
 
@@ -14,6 +16,10 @@ public class RequestProcessingService {
         this.utils = utils;
     }
 
+    public List<Request> getUserRequests() {
+        return utils.getAllUserRequests();
+    }
+
     public void executeUserRequest(int requestId) {
         Request request = utils.getUserRequestById(requestId);
         if (request.getType() == Request.RequestType.ADD) {
@@ -22,6 +28,7 @@ public class RequestProcessingService {
         else {
             deleteActivity(request);
         }
+        utils.deleteUserRequest(request);
     }
 
     public void refuseUserRequest(int requestId) {

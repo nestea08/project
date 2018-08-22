@@ -16,13 +16,13 @@ class ConnectionPoolHolder {
                 if (dataSource == null) {
                     ResourceBundle bundle = DaoFactory.getBundle();
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setUrl("jdbc:mysql://localhost:3306/projectdb?serverTimezone=UTC");
-                    ds.setUsername("root");
-                    ds.setPassword("1111");
-                    ds.setMinIdle(5);
-                    ds.setMaxIdle(10);
-                    ds.setMaxOpenPreparedStatements(100);
-                    ds.setDriverClassName("com.mysql.jdbc.Driver");
+                    ds.setUrl(bundle.getString("connection.url"));
+                    ds.setUsername(bundle.getString("connection.username"));
+                    ds.setPassword(bundle.getString("connection.password"));
+                    ds.setMinIdle(Integer.parseInt(bundle.getString("connection.minIdle")));
+                    ds.setMaxIdle(Integer.parseInt(bundle.getString("connection.maxIdle")));
+                    ds.setMaxOpenPreparedStatements(Integer.parseInt(bundle.getString("connection.maxOpenPS")));
+                    ds.setDriverClassName(bundle.getString("connection.driver"));
                     dataSource = ds;
                 }
             }

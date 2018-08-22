@@ -39,6 +39,14 @@ public class AdminsUtils {
         }
     }
 
+    public List<Request> getAllUserRequests() {
+        try (UserRequestDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+            return dao.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
     public List<HistoryItem> getAllHistoryItems() {
         try (HistoryItemDao dao = JDBCDaoFactory.getInstance().createHistoryItemDao()) {
             return dao.findAll();

@@ -20,9 +20,10 @@
 <body>
 <fmt:message key="output.login"/>
 <form method="post" action="${pageContext.request.contextPath}/login">
-    <input type="text" name="login">
+    <input type="email" name="email" >
     <input type="password" name="password">
     <input type="submit" value="login">
 </form>
+<c:out value="${requestScope.exception}"/>
 </body>
 </html>

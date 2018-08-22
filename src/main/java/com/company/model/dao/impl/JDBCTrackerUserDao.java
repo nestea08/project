@@ -40,8 +40,10 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 trackerUser = trackerUserMapper.extractFromResultSet(set);
                 trackerUser = trackerUserMapper.makeUnique(users, trackerUser);
                 Activity activity = activityMapper.extractFromResultSet(set);
-                int spentTime = set.getInt("spent_time");
-                trackerUser.addTrackedItem(new TimeTrackedItem(activity, spentTime));
+                if (activity.getId() != 0) {
+                    int spentTime = set.getInt("spent_time");
+                    trackerUser.addTrackedItem(new TimeTrackedItem(activity, spentTime));
+                }
             }
             return trackerUser;
         } catch (SQLException e) {

@@ -18,9 +18,16 @@
     <title>Time Tracking</title>
 </head>
 <body>
-    <fmt:message key="activities.hello"/>:<br/>
+    <c:choose>
+        <c:when test="${empty requestScope.trackedItems}">
+            <fmt:message key="activities.empty"/><br/>
+        </c:when>
+        <c:otherwise>
+            <fmt:message key="activities.hello"/>:<br/>
+        </c:otherwise>
+    </c:choose>
 
-    <form action="" method="post">
+
     <c:forEach items="${requestScope.trackedItems}" var="trackedItem">
         <ul>
             <li><c:out value="${trackedItem.title}"/></li>
@@ -30,7 +37,7 @@
             <a href="${pageContext.request.contextPath}/user/activity_remove?id=${trackedItem.id}"> <fmt:message key="activities.remove"/></a>
         </ul>
     </c:forEach>
-    </form>
+
     <c:forEach var="i" begin="1" end="${requestScope.pagesCount}">
         <a href="?page=${i}"><c:out value="${i}"/></a>
     </c:forEach>
