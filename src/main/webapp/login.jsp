@@ -24,6 +24,8 @@
     <input type="password" name="password">
     <input type="submit" value="login">
 </form>
-<c:out value="${requestScope.exception}"/>
+<c:if test="${not empty requestScope.exception}">
+    <fmt:message key="${requestScope.exception}"/>
+</c:if>
 </body>
 </html>

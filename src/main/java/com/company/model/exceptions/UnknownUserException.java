@@ -5,4 +5,9 @@ public class UnknownUserException extends Exception {
     public String getMessage() {
         return "Unknown email or password";
     }
+
+    @Override
+    public String getLocalizedMessage() {
+        return "exceptions.unknownUser";
+    }
 }

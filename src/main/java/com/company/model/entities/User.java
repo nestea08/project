@@ -10,7 +10,7 @@ public class User {
     private Role role;
 
     public enum Role {
-        USER, ADMIN
+        GUEST, USER, ADMIN
     }
 
     public static class Builder {

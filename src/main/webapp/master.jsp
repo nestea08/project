@@ -19,11 +19,12 @@
 <form>
     <select id="language" name="language" onchange="submit()">
         <option value="en" ${language.equals("en") ? 'selected' : ''}>English</option>
-        <option value="ru" ${language.equals("ru") ? 'selected' : ''}>Russian</option>
+        <option value="ru" ${language.equals("ru") ? 'selected' : ''}>Русский</option>
     </select>
     <c:choose>
         <c:when test="${empty sessionScope.user}">
-            <a href="${pageContext.request.contextPath}/login.jsp">Login</a>
+            <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="master.login"/></a>
+            <a href="${pageContext.request.contextPath}/signUp.jsp"><fmt:message key="master.signUp"/></a>
         </c:when>
         <c:otherwise>
             <fmt:message key="master.hello"/>, <c:out value="${sessionScope.user}"/><a href="${pageContext.request.contextPath}/logout">Logout</a>

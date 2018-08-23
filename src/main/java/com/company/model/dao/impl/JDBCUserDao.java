@@ -69,7 +69,9 @@ public class JDBCUserDao implements UserDao {
             statement.setString(1, login);
             statement.setString(2, password);
             ResultSet set = statement.executeQuery();
-            set.next();
+            if (!set.next()) {
+                return null;
+            }
             return userMapper.extractFromResultSet(set);
         } catch (SQLException e) {
             throw new RuntimeException();

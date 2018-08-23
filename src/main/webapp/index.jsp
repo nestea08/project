@@ -12,6 +12,11 @@
 </head>
 <body>
     <fmt:message key="index.hello"/>
-    <a href="${pageContext.request.contextPath}/data">Get data</a>
+    <c:if test="${sessionScope.role eq 'USER'}">
+        <a href="${pageContext.request.contextPath}/user/User.jsp"><fmt:message key="index.user"/></a>
+    </c:if>
+    <c:if test="${sessionScope.role eq 'ADMIN'}">
+        <a href="${pageContext.request.contextPath}/admin/admin.jsp"><fmt:message key="index.admin"/></a>
+    </c:if>
 </body>
 </html>

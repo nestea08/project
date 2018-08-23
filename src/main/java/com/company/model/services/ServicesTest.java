@@ -97,7 +97,7 @@ public class ServicesTest {
 
     @Test
     public void test() throws Exception {
-        LogsHolderService service = new LogsHolderService();
-        service.getLogs();
+        SignInService service = new SignInService();
+        service.findUser("nestea08@yandex.ru", "1111");
     }
 }

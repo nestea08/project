@@ -1,11 +1,13 @@
 package com.company.controller.commands;
 
 import com.company.model.entities.User;
+import com.sun.deploy.net.HttpRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
+import java.util.Locale;
 
 class CommandUtils {
     static void saveUserInSession(HttpSession session, User user) {
@@ -40,5 +42,9 @@ class CommandUtils {
             throw new IllegalArgumentException("Logged guests are not initialized");
         }
         return (HashSet<String>) obj;
+    }
+
+    public static Locale getLocale(HttpServletRequest request) {
+        return new Locale(request.getSession().getAttribute("language").toString());
     }
 }

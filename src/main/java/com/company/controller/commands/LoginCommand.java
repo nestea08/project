@@ -7,6 +7,7 @@ import com.company.model.exceptions.UnknownUserException;
 import com.company.model.services.guests.SignInService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 public class LoginCommand implements Command {
     @Override
@@ -18,7 +19,7 @@ public class LoginCommand implements Command {
             user = findUser(request, email, password);
         }
         catch (NotValidEmailException | NotValidPasswordException | UnknownUserException e) {
-            request.setAttribute("exception", e.getMessage());
+            request.setAttribute("exception", e.getLocalizedMessage());
             return "/login.jsp";
         }
         CommandUtils.logUser(request.getServletContext(), user);

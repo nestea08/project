@@ -15,9 +15,9 @@
 <body>
     <fmt:message key="signUp.message"/>
     <form method="post" action="${pageContext.request.contextPath}/signUp">
-        <fmt:message key="signUp.nickname"/>: <input type="text" name="nickname"/>
-        <fmt:message key="signUp.email"/>: <input type="email" name="email"/>
-        <fmt:message key="signUp.password"/>: <input type="password" name="password"/>
+        <fmt:message key="signUp.nickname"/>: <input type="text" name="nickname"/><br/>
+        <fmt:message key="signUp.email"/>: <input type="email" name="email"/><br/>
+        <fmt:message key="signUp.password"/>: <input type="password" name="password"/><br/>
         <input type="submit" value = "Sign up">
     </form>
 </body>

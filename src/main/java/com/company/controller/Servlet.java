@@ -28,7 +28,6 @@ public class Servlet extends HttpServlet {
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("exception", new ExceptionCommand());
-        commands.put("data", new DataCommand());
         commands.put("user/activities", new FindActivitiesCommand());
         commands.put("user/activity", new ActivityTrackingCommand());
         commands.put("user/activity_remove", new RemoveActivityCommand());
@@ -52,7 +51,7 @@ public class Servlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws ServletException, IOException { ;
         String path = req.getRequestURI();
         path = path.replaceAll(".*/tracker/", "");
         Command command = commands.getOrDefault(path, l -> "/index.jsp");

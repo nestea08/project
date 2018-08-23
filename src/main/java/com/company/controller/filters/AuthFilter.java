@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.company.model.entities.User.Role.GUEST;
+
 public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
@@ -18,10 +20,13 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse)servletResponse;
         User.Role role = (User.Role)req.getSession().getAttribute("role");
+        role = role == null ? GUEST : role;
         if (hasNotNecessaryAccess(req.getRequestURI(), role)) {
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
         }
-        filterChain.doFilter(servletRequest, servletResponse);
+        else {
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
     }
 
     private boolean hasNotNecessaryAccess(String uri, User.Role role) {
