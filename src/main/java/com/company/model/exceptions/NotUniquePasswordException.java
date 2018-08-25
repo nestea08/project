@@ -12,4 +12,9 @@ public class NotUniquePasswordException extends Exception{
     public String getMessage() {
         return "Password " + password + " is not unique.";
     }
+
+    @Override
+    public String getLocalizedMessage() {
+        return "exceptions.notUniquePassword";
+    }
 }

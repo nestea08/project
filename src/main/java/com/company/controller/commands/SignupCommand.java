@@ -18,9 +18,10 @@ public class SignupCommand implements Command {
         SignUpService service = new SignUpService();
         User user;
         try {
+            checkInput(nickname, email, password);
             user = service.createUser(nickname, email, password);
         } catch (Exception e) {
-            request.setAttribute("exception", e.getMessage());
+            request.setAttribute("exception", e.getLocalizedMessage());
             return "/signUp.jsp";
         }
         CommandUtils.logUser(request.getServletContext(), user);

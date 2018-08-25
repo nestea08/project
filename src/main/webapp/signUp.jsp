@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: vlad
@@ -20,5 +21,8 @@
         <fmt:message key="signUp.password"/>: <input type="password" name="password"/><br/>
         <input type="submit" value = "Sign up">
     </form>
+    <c:if test="${not empty requestScope.exception}">
+        <fmt:message key="${requestScope.exception}"/>
+    </c:if>
 </body>
 </html>

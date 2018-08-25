@@ -27,6 +27,7 @@ public class Servlet extends HttpServlet {
         commands = new HashMap<>();
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
+        commands.put("signUp", new SignupCommand());
         commands.put("exception", new ExceptionCommand());
         commands.put("user/activities", new FindActivitiesCommand());
         commands.put("user/activity", new ActivityTrackingCommand());

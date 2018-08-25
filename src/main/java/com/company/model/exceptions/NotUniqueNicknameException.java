@@ -12,4 +12,9 @@ public class NotUniqueNicknameException extends Exception {
     public String getMessage() {
         return "Nickname " + nickname + " is not unique.";
     }
+
+    @Override
+    public String getLocalizedMessage() {
+        return "exceptions.notUniqueNickname";
+    }
 }

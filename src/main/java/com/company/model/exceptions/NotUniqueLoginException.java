@@ -12,4 +12,9 @@ public class NotUniqueLoginException extends Exception {
     public String getMessage() {
         return "Login " + login + " is not unique.";
     }
+
+    @Override
+    public String getLocalizedMessage() {
+        return "exceptions.notUniqueLogin";
+    }
 }
