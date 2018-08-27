@@ -7,13 +7,13 @@ import com.company.model.exceptions.*;
 import java.util.List;
 
 public class SignUpService {
-    private UsersUtils utils;
+    private GuestsUtils utils;
 
     public SignUpService() {
-        utils = new UsersUtils();
+        utils = new GuestsUtils();
     }
 
-    public SignUpService(UsersUtils utils) {
+    public SignUpService(GuestsUtils utils) {
         this.utils = utils;
     }
 

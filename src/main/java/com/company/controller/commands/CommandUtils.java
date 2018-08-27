@@ -1,6 +1,8 @@
 package com.company.controller.commands;
 
+import com.company.controller.Pagination;
 import com.company.model.entities.User;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.sun.deploy.net.HttpRequest;
 
 import javax.servlet.ServletContext;
@@ -9,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 import java.util.Locale;
 
-class CommandUtils {
+public class CommandUtils {
     static void saveUserInSession(HttpSession session, User user) {
         session.setAttribute("user", user.getNickname());
         session.setAttribute("role", user.getRole());
@@ -36,6 +38,18 @@ class CommandUtils {
         loggedUsers.remove(nickname);
     }
 
+    public static void setCurrentPageForPagination(HttpServletRequest request,
+                                                   Pagination<?> pagination) {
+        String pageParameter = request.getParameter("page");
+        if (pageParameter != null) {
+            pagination.setCurrentPage(Integer.parseInt(pageParameter));
+        }
+    }
+
+    public static Locale getLocale(HttpServletRequest request) {
+        return new Locale(request.getSession().getAttribute("language").toString());
+    }
+
     private static HashSet<String> getLoggedUsers(ServletContext context) {
         Object obj = context.getAttribute("loggedUsers");
         if (!(obj instanceof HashSet<?>)) {
@@ -44,7 +58,4 @@ class CommandUtils {
         return (HashSet<String>) obj;
     }
 
-    public static Locale getLocale(HttpServletRequest request) {
-        return new Locale(request.getSession().getAttribute("language").toString());
-    }
 }

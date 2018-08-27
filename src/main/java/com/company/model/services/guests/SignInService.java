@@ -4,13 +4,13 @@ import com.company.model.entities.User;
 import com.company.model.exceptions.UnknownUserException;
 
 public class SignInService {
-    private UsersUtils utils;
+    private GuestsUtils utils;
 
     public SignInService() {
-        utils = new UsersUtils();
+        utils = new GuestsUtils();
     }
 
-    public SignInService(UsersUtils utils) {
+    public SignInService(GuestsUtils utils) {
         this.utils = utils;
     }
 

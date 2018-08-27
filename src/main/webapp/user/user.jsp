@@ -18,5 +18,6 @@
 <body>
 <fmt:message key="user.hello"/>
 <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="user.activities"/></a>
+<a href="${pageContext.request.contextPath}/user/possible_activities"><fmt:message key="user.startActivity"/></a>
 </body>
 </html>

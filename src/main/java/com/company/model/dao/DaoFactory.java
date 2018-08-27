@@ -14,6 +14,7 @@ public abstract class DaoFactory {
     public abstract ActivityDao createActivityDao();
     public abstract UserRequestDao createUserRequestDao();
     public abstract HistoryItemDao createHistoryItemDao();
+    public abstract TransactionsDao createTransactionsDao();
 
     public static DaoFactory getInstance() {
         if (instance == null) {

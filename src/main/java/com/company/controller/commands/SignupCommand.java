@@ -26,7 +26,7 @@ public class SignupCommand implements Command {
         }
         CommandUtils.logUser(request.getServletContext(), user);
         CommandUtils.saveUserInSession(request.getSession(), user);
-        return request.getContextPath() + "/redirect/user/User.jsp";
+        return request.getContextPath() + "/redirect/user/user.jsp";
     }
 
     private void checkInput(String nickname, String email, String password)

@@ -26,6 +26,6 @@
         <input type="submit" value="Change"/>
     </form>
     <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.trackedItem.id}"> <fmt:message key="activity.finish"/></a>
-
+    <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
 </body>
 </html>

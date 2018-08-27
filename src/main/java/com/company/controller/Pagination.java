@@ -19,14 +19,14 @@ public class Pagination<T> {
     private int calculatePagesCount() {
         int itemsCount = items.size();
         int pagesCount = itemsCount / itemsPerPage;
-        if (pagesCount == 0) {
-            return pagesCount;
+        if (isNecessaryIncompletePage(itemsCount)) {
+            pagesCount++;
         }
-        return isNecessaryIncompletePage(itemsCount, pagesCount) ? pagesCount + 1 : pagesCount;
+        return pagesCount > 1 ? pagesCount : 0;
     }
 
-    private boolean isNecessaryIncompletePage(int itemsCount, int pagesCount) {
-        return itemsCount % pagesCount != 0;
+    private boolean isNecessaryIncompletePage(int itemsCount) {
+        return itemsCount % itemsPerPage != 0;
     }
 
     public List<T> getItemsForCurrentPage() {

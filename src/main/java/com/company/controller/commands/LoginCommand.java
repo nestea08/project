@@ -18,7 +18,7 @@ public class LoginCommand implements Command {
         try {
             user = findUser(request, email, password);
         }
-        catch (NotValidEmailException | NotValidPasswordException | UnknownUserException e) {
+        catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
             return "/login.jsp";
         }
@@ -27,7 +27,7 @@ public class LoginCommand implements Command {
         if (user.getRole() == User.Role.ADMIN) {
             return request.getContextPath() + "/redirect/admin/admin.jsp";
         } else {
-            return request.getContextPath() + "/redirect/user/User.jsp";
+            return request.getContextPath() + "/redirect/user/user.jsp";
         }
 
     }
@@ -54,13 +54,13 @@ public class LoginCommand implements Command {
 
 
     private void checkEmail(String email) throws NotValidEmailException {
-        if (email == null || InputValidator.strNotMatchesRegex(email, InputValidator.EMAIL_REGEX)) {
+        if (InputValidator.strNotMatchesRegex(email, InputValidator.EMAIL_REGEX)) {
             throw new NotValidEmailException(email);
         }
     }
 
     private void checkPassword(String password) throws NotValidPasswordException {
-        if (password == null || InputValidator.strNotMatchesRegex(password, InputValidator.PASSWORD_REGEX)) {
+        if (InputValidator.strNotMatchesRegex(password, InputValidator.PASSWORD_REGEX)) {
             throw new NotValidPasswordException(password);
         }
     }

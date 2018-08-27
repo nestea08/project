@@ -4,7 +4,6 @@ import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.exceptions.NotUniqueNicknameException;
 import com.company.model.services.admins.AdminsUtils;
-import com.company.model.services.admins.LogsHolderService;
 import com.company.model.services.admins.RequestProcessingService;
 import com.company.model.services.users.*;
 import com.company.model.services.guests.*;
@@ -19,8 +18,8 @@ import static org.mockito.Mockito.*;
 public class ServicesTest {
 
 
+    private GuestsUtils guestsUtils = mock(GuestsUtils.class);
     private UsersUtils usersUtils = mock(UsersUtils.class);
-    private TrackersUtils trackersUtils = mock(TrackersUtils.class);
     private AdminsUtils adminsUtils = mock(AdminsUtils.class);
     private TrackerUser testingUser;
     private Activity testingActivity;
@@ -35,55 +34,56 @@ public class ServicesTest {
 
     @Test
     public void signInServiceFindUserTest() throws Exception {
-        when(usersUtils.getUserByLoginAndPassword("user@mail.ru", "1111")).
+        when(guestsUtils.getUserByLoginAndPassword("user@mail.ru", "1111")).
                 thenReturn(testingUser);
-        SignInService service = new SignInService(usersUtils);
+        SignInService service = new SignInService(guestsUtils);
         User user = service.findUser("user@mail.ru", "1111");
         Assert.assertEquals("user123", user.getNickname());
     }
 
     @Test
     public void signUpServiceCreateUserTest() throws Exception {
-        SignUpService service = new SignUpService(usersUtils);
+        SignUpService service = new SignUpService(guestsUtils);
         service.createUser("user123", "user@mail.ru", "1111");
-        verify(usersUtils, times(1)).createUser(testingUser);
+        verify(guestsUtils, times(1)).createUser(testingUser);
     }
 
     @Test(expected = NotUniqueNicknameException.class)
     public void signUpServiceCreateUserExceptionTest() throws Exception {
-        when(usersUtils.getAllUsers()).thenReturn(Arrays.asList(
+        when(guestsUtils.getAllUsers()).thenReturn(Arrays.asList(
                 new User.Builder("firstUser", "user1@mail.ru", "user1", User.Role.USER).build(),
                 new User.Builder("secondUser", "user2@mail.ru", "user2", User.Role.USER).build()
         ));
-        SignUpService service = new SignUpService(usersUtils);
+        SignUpService service = new SignUpService(guestsUtils);
         service.createUser("firstUser", "user", "1111");
     }
 
     @Test
     public void timeTrackingServiceTrackTimeTest() {
-        TimeTrackingService service = new TimeTrackingService(trackersUtils);
+        TimeTrackingService service = new TimeTrackingService(usersUtils);
         testingUser.addTrackedItem(trackedItem);
-        when(trackersUtils.getTrackerUserById(1)).thenReturn(testingUser);
+        when(usersUtils.getTrackerUserById(1)).thenReturn(testingUser);
         service.trackTime(1, 1, 10);
-        verify(trackersUtils, times(1)).updateSpentTime(testingUser, trackedItem.plusSpentTime(10));
+        verify(usersUtils, times(1)).updateSpentTime(testingUser, trackedItem.plusSpentTime(10));
     }
 
     @Test
     public void userRequestsServiceAddUserRequestTest() {
-        RequestsSaverService service = new RequestsSaverService(trackersUtils);
-        when(trackersUtils.getTrackerUserById(1)).thenReturn(testingUser);
-        when(trackersUtils.getActivityById(1)).thenReturn(testingActivity);
+        RequestsSaverService service = new RequestsSaverService(usersUtils);
+        when(usersUtils.getTrackerUserById(1)).thenReturn(testingUser);
+        when(usersUtils.getActivityById(1)).thenReturn(testingActivity);
         service.saveTrackerUserRequest(1,1, Request.RequestType.ADD);
-        verify(trackersUtils, times(1)).
+        verify(usersUtils, times(1)).
                 createUserRequest(new Request(testingUser, testingActivity, Request.RequestType.ADD));
     }
 
     @Test
     public void requestProcessingServiceExecuteUserRequestTest() {
         RequestProcessingService service = new RequestProcessingService(adminsUtils);
-        when(adminsUtils.getUserRequestById(1)).thenReturn(new Request(testingUser, testingActivity, Request.RequestType.ADD));
+        Request request = new Request(testingUser, testingActivity, Request.RequestType.ADD);
+        when(adminsUtils.getUserRequestById(1)).thenReturn(request);
         service.executeUserRequest(1);
-        verify(adminsUtils,times(1)).addActivityToTracker(testingUser, testingActivity);
+        verify(adminsUtils,times(1)).executeAdditionRequest(request);
     }
 
     @Test

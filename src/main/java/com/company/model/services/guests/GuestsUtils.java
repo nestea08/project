@@ -6,7 +6,7 @@ import com.company.model.entities.User;
 
 import java.util.List;
 
-public class UsersUtils {
+public class GuestsUtils {
 
     public void createUser(User user) {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()) {

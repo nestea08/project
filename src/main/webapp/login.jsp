@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<fmt:message key="output.login"/>
+<fmt:message key="login.message"/>
 <form method="post" action="${pageContext.request.contextPath}/login">
     <input type="email" name="email" >
     <input type="password" name="password">

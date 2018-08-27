@@ -61,6 +61,23 @@ public class JDBCActivityDao implements ActivityDao {
     }
 
     @Override
+    public List<Activity> findPossibleForTrackerActivities(int trackerId) {
+        List<Activity> result = new ArrayList<>();
+        ActivityMapper activityMapper = new ActivityMapper();
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("activity.findPossibleForTracker"))) {
+            statement.setInt(1, trackerId);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                result.add(activityMapper.extractFromResultSet(set));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        return result;
+    }
+
+    @Override
     public void update(Activity item) {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("activity.update"))) {
@@ -84,29 +101,6 @@ public class JDBCActivityDao implements ActivityDao {
         }
     }
 
-    @Override
-    public void addActivityToTracker(Tracker tracker, Activity activity) {
-        try (PreparedStatement statement = connection.prepareStatement
-                (bundle.getString("activity.addTracker"))) {
-            statement.setInt(1, tracker.getId());
-            statement.setInt(2, activity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
-
-    @Override
-    public void removeActivityFromTracker(Tracker tracker, Activity activity) {
-        try (PreparedStatement statement = connection.prepareStatement
-                (bundle.getString("activity.removeTracker"))) {
-            statement.setInt(1, tracker.getId());
-            statement.setInt(2, activity.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
 
     @Override
     public void close() {

@@ -6,17 +6,16 @@ import com.company.model.entities.interfaces.Tracker;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 
 public class TimeTrackingService {
-    private TrackersUtils utils;
+    private UsersUtils utils;
 
     public TimeTrackingService() {
-        utils = new TrackersUtils();
+        utils = new UsersUtils();
     }
 
-    public TimeTrackingService(TrackersUtils utils) {
+    public TimeTrackingService(UsersUtils utils) {
         this.utils = utils;
     }
 
@@ -42,9 +41,7 @@ public class TimeTrackingService {
         if (trackedItem.getSpentTime() == 0) {
             throw new RuntimeException();
         }
-        HistoryItem item = new HistoryItem(trackedItem.getTitle(), tracker, trackedItem.getSpentTime(), LocalDate.now());
-        utils.removeTrackedFromTracker(tracker, trackedItem);
-        utils.createHistoryItem(item);
+        utils.transformTrackedIntoHistoryItem(tracker, trackedItem);
     }
 
 }

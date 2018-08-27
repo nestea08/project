@@ -13,7 +13,7 @@
 <body>
     <fmt:message key="index.hello"/>
     <c:if test="${sessionScope.role eq 'USER'}">
-        <a href="${pageContext.request.contextPath}/user/User.jsp"><fmt:message key="index.user"/></a>
+        <a href="${pageContext.request.contextPath}/user/user.jsp"><fmt:message key="index.user"/></a>
     </c:if>
     <c:if test="${sessionScope.role eq 'ADMIN'}">
         <a href="${pageContext.request.contextPath}/admin/admin.jsp"><fmt:message key="index.admin"/></a>

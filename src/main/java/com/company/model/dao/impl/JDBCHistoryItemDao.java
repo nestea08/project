@@ -22,7 +22,8 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
 
     @Override
     public void create(HistoryItem item) {
-        try (PreparedStatement statement = connection.prepareStatement
+        throw new RuntimeException();
+        /*try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("histItem.create"))) {
             statement.setString(1, item.getTitle());
             statement.setInt(2, item.getSpentTime());
@@ -31,7 +32,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
-        }
+        }*/
     }
 
     @Override

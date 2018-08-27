@@ -5,10 +5,7 @@ import com.company.controller.commands.admin.ExecuteUserRequestCommand;
 import com.company.controller.commands.admin.RefuseUserRequestCommand;
 import com.company.controller.commands.admin.ShowTrackingHistoryCommand;
 import com.company.controller.commands.admin.ShowUserRequestsCommand;
-import com.company.controller.commands.user.ActivityTrackingCommand;
-import com.company.controller.commands.user.FindActivitiesCommand;
-import com.company.controller.commands.user.FinishActivityCommand;
-import com.company.controller.commands.user.RemoveActivityCommand;
+import com.company.controller.commands.user.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +30,8 @@ public class Servlet extends HttpServlet {
         commands.put("user/activity", new ActivityTrackingCommand());
         commands.put("user/activity_remove", new RemoveActivityCommand());
         commands.put("user/activity_finish", new FinishActivityCommand());
+        commands.put("user/possible_activities", new GetPossibleActivitiesCommand());
+        commands.put("user/start_activity", new StartActivityCommand());
         commands.put("admin/requests", new ShowUserRequestsCommand());
         commands.put("admin/history", new ShowTrackingHistoryCommand());
         commands.put("admin/execute_request", new ExecuteUserRequestCommand());

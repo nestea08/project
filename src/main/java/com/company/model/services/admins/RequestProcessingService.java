@@ -23,12 +23,11 @@ public class RequestProcessingService {
     public void executeUserRequest(int requestId) {
         Request request = utils.getUserRequestById(requestId);
         if (request.getType() == Request.RequestType.ADD) {
-            addActivity(request);
+            utils.executeAdditionRequest(request);
         }
         else {
-            deleteActivity(request);
+            utils.executeRemovingRequest(request);
         }
-        utils.deleteUserRequest(request);
     }
 
     public void refuseUserRequest(int requestId) {
@@ -36,12 +35,6 @@ public class RequestProcessingService {
         utils.deleteUserRequest(request);
     }
 
-    private void addActivity(Request request) {
-        utils.addActivityToTracker(request.getTracker(), request.getActivity());
-    }
 
-    private void deleteActivity(Request request) {
-        utils.removeActivityFromTracker(request.getTracker(), request.getActivity());
-    }
 
 }

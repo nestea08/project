@@ -6,7 +6,9 @@ import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 
-public class TrackersUtils {
+import java.util.List;
+
+public class UsersUtils {
 
     public TrackerUser getTrackerUserById(int id) {
         try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
@@ -19,6 +21,14 @@ public class TrackersUtils {
     public Activity getActivityById(int id) {
         try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             return dao.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public List<Activity> getPossibleActivities(int trackerId) {
+        try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
+            return dao.findPossibleForTrackerActivities(trackerId);
         } catch (Exception e) {
             throw new RuntimeException();
         }
@@ -40,10 +50,9 @@ public class TrackersUtils {
         }
     }
 
-    public void removeTrackedFromTracker(Tracker tracker, TrackedItem trackedItem) {
-        try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
-            dao.removeActivityFromTracker(tracker,
-                    new Activity(trackedItem.getId(), trackedItem.getTitle(), trackedItem.getDescription()));
+    public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem) {
+        try (TransactionsDao dao = JDBCDaoFactory.getInstance().createTransactionsDao()) {
+            dao.transformTrackedIntoHistoryItem(tracker, trackedItem);
         } catch (Exception e) {
             throw new RuntimeException();
         }

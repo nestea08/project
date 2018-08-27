@@ -3,23 +3,25 @@ package com.company.controller.commands.user;
 import com.company.controller.Pagination;
 import com.company.controller.commands.Command;
 import com.company.controller.commands.CommandUtils;
+import com.company.model.entities.Activity;
 import com.company.model.entities.interfaces.TrackedItem;
-import com.company.model.services.users.TimeTrackingService;
+import com.company.model.services.users.PossibleActivitiesService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
 
-public class FindActivitiesCommand implements Command {
+public class GetPossibleActivitiesCommand implements Command {
+
     @Override
     public String execute(HttpServletRequest request) {
-        TimeTrackingService service = new TimeTrackingService();
         int id = UserCommandUtils.getUserIdFromSession(request.getSession());
-        List<TrackedItem> trackedItems = service.getTrackedItems(id);
-        Pagination<TrackedItem> pagination = new Pagination<>(trackedItems, 4);
+        PossibleActivitiesService service = new PossibleActivitiesService();
+        List<Activity> activities = service.getPossibleActivities(id);
+        Pagination<Activity> pagination = new Pagination<>(activities, 7);
         CommandUtils.setCurrentPageForPagination(request, pagination);
-        request.setAttribute("trackedItems", pagination.getItemsForCurrentPage());
+        request.setAttribute("activities", pagination.getItemsForCurrentPage());
         request.setAttribute("pagesCount", pagination.getPagesCount());
-        return "/user/activities.jsp";
+        return "/user/possible_activities.jsp";
     }
 
 }
