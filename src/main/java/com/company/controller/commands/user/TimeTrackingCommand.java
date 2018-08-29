@@ -4,6 +4,7 @@ import com.company.controller.commands.Command;
 import com.company.controller.InputValidator;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.exceptions.InvalidSpentTimeException;
+import com.company.model.exceptions.UnknownTrackedItemException;
 import com.company.model.services.users.TimeTrackingService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,10 @@ public class TimeTrackingCommand implements Command {
         try {
             checkTimeTracking(request, userId, activityId, spentTime);
         }
-        catch (InvalidSpentTimeException e) {
+        catch (UnknownTrackedItemException e) {
+            return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
+        }
+        catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
             return "/user/activity.jsp";
         }

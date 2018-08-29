@@ -2,6 +2,7 @@ package com.company.controller.commands.user;
 
 import com.company.model.entities.interfaces.TrackedItem;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -20,5 +21,11 @@ class UserCommandUtils {
 
     static void saveTrackedItemInSession(HttpSession session, TrackedItem item) {
         session.setAttribute("trackedItem", item);
+    }
+
+    static String setExceptionAttributeAndGetRedirectPath(Throwable throwable,
+                                                          HttpServletRequest request) {
+        request.getSession().setAttribute("exception", throwable.getLocalizedMessage());
+        return request.getContextPath() + "/redirect/user/user_exception.jsp";
     }
 }

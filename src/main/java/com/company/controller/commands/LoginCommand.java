@@ -1,8 +1,8 @@
 package com.company.controller.commands;
 
 import com.company.controller.InputValidator;
-import com.company.controller.commands.exceptions.InvalidEmailException;
-import com.company.controller.commands.exceptions.InvalidPasswordException;
+import com.company.controller.exceptions.InvalidEmailException;
+import com.company.controller.exceptions.InvalidPasswordException;
 import com.company.model.entities.User;
 import com.company.model.exceptions.UnknownUserException;
 import com.company.model.services.guests.SignInService;

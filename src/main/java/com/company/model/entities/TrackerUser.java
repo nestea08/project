@@ -3,6 +3,7 @@ package com.company.model.entities;
 
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
+import com.company.model.exceptions.UnknownTrackedItemException;
 
 import java.util.*;
 
@@ -44,7 +45,7 @@ public class TrackerUser extends User implements Tracker{
         Optional<TrackedItem> trackedOptional = trackedItems.stream().
                 filter(item -> item.getId() == id).findFirst();
         if (!trackedOptional.isPresent()) {
-            throw new RuntimeException();
+            throw new UnknownTrackedItemException(id);
         }
         return trackedOptional.get();
     }

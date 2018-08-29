@@ -2,8 +2,8 @@ package com.company.controller.commands.admin;
 
 import com.company.controller.commands.Command;
 import com.company.controller.InputValidator;
-import com.company.controller.commands.exceptions.InvalidDescriptionException;
-import com.company.controller.commands.exceptions.InvalidTitleException;
+import com.company.controller.exceptions.InvalidDescriptionException;
+import com.company.controller.exceptions.InvalidTitleException;
 import com.company.model.exceptions.NotUniqueActivityException;
 import com.company.model.services.admins.ActivityCreationService;
 

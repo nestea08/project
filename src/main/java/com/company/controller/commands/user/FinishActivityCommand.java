@@ -11,7 +11,12 @@ public class FinishActivityCommand implements Command {
         TimeTrackingService service = new TimeTrackingService();
         int activityId = Integer.parseInt(request.getParameter("id"));
         int userId = UserCommandUtils.getUserIdFromSession(request.getSession());
-        service.finishTracking(userId, activityId);
+        try {
+            service.finishTracking(userId, activityId);
+        }
+        catch (Exception e) {
+            return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
+        }
         return request.getContextPath() + "/redirect/user/activities";
     }
 }

@@ -16,8 +16,7 @@ public class StartActivityCommand implements Command {
         try {
             service.saveTrackerUserRequest(userId, activityId, Request.RequestType.ADD);
         } catch (DuplicateRequestException e) {
-            request.getSession().setAttribute("exception", e.getLocalizedMessage());
-            return request.getContextPath() + "/redirect/user/user_exception.jsp";
+            return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }
         return request.getContextPath() + "/redirect/user/activity_started.jsp";
     }

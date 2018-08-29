@@ -1,4 +1,4 @@
-package com.company.controller.commands.exceptions;
+package com.company.controller.exceptions;
 
 public class InvalidTitleException extends Exception {
     private String title;

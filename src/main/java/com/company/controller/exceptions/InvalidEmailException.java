@@ -1,4 +1,4 @@
-package com.company.controller.commands.exceptions;
+package com.company.controller.exceptions;
 
 public class InvalidEmailException extends Exception {
     private String email;

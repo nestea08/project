@@ -1,5 +1,7 @@
 package com.company.model.entities.interfaces;
 
+import com.company.model.exceptions.UnknownTrackedItemException;
+
 import java.util.List;
 
 public interface Tracker {
@@ -13,6 +15,6 @@ public interface Tracker {
 
     List<TrackedItem> getTrackedItems();
 
-    TrackedItem getTrackedItemById(int id);
+    TrackedItem getTrackedItemById(int id) throws UnknownTrackedItemException;
 
 }

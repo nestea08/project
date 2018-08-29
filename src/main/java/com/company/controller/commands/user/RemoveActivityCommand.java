@@ -16,8 +16,7 @@ public class RemoveActivityCommand implements Command {
         try {
             service.saveTrackerUserRequest(userId, activityId, Request.RequestType.REMOVE);
         } catch (DuplicateRequestException e) {
-            request.getSession().setAttribute("exception", e.getLocalizedMessage());
-            return request.getContextPath() + "/redirect/user/user_exception.jsp";
+            return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }
         return request.getContextPath() + "/redirect/user/activity_removed.jsp";
     }

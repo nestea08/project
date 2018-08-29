@@ -30,7 +30,8 @@ public class TimeTrackingService {
         return tracker.getTrackedItemById(trackedId);
     }
 
-    public TrackedItem trackTime(int userId, int trackedId, int time) throws InvalidSpentTimeException {
+    public TrackedItem trackTime(int userId, int trackedId, int time)
+            throws InvalidSpentTimeException {
         Tracker tracker = utils.getTrackerUserById(userId);
         TrackedItem trackedItem = tracker.getTrackedItemById(trackedId).plusSpentTime(time);
         utils.updateSpentTime(tracker, trackedItem);
@@ -41,7 +42,7 @@ public class TimeTrackingService {
         Tracker tracker = utils.getTrackerUserById(userId);
         TrackedItem trackedItem = tracker.getTrackedItemById(trackedId);
         if (trackedItem.getSpentTime() == 0) {
-            throw new RuntimeException();
+            throw new IllegalStateException("exceptions.invalidTrackingItemFinishing");
         }
         utils.transformTrackedIntoHistoryItem(tracker, trackedItem);
     }
