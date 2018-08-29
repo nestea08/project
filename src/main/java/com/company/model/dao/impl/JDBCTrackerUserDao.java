@@ -5,6 +5,7 @@ import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
+import com.company.model.exceptions.InvalidSpentTimeException;
 
 import java.sql.*;
 import java.util.*;
@@ -46,7 +47,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 }
             }
             return trackerUser;
-        } catch (SQLException e) {
+        } catch (SQLException | InvalidSpentTimeException e) {
             throw new RuntimeException();
         }
     }
@@ -69,7 +70,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 user.addTrackedItem(new TimeTrackedItem(activity, spentTime));
                 result.add(user);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | InvalidSpentTimeException e) {
             throw new RuntimeException();
         }
         return result;

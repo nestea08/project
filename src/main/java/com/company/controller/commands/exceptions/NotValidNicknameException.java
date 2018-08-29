@@ -1,8 +1,5 @@
 package com.company.controller.commands.exceptions;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class NotValidNicknameException extends Exception {
     private String nickname;
 
@@ -17,6 +14,6 @@ public class NotValidNicknameException extends Exception {
 
     @Override
     public String getLocalizedMessage() {
-        return"exceptions.notValidNickname";
+        return "exceptions.invalidNickname";
     }
 }

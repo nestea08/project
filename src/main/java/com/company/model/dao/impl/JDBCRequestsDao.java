@@ -1,28 +1,35 @@
 package com.company.model.dao.impl;
 
 import com.company.model.dao.DaoFactory;
-import com.company.model.dao.UserRequestDao;
+import com.company.model.dao.RequestsDao;
 import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
 
 import java.sql.*;
 import java.util.*;
 
-public class JDBCUserRequestDao implements UserRequestDao {
+public class JDBCRequestsDao implements RequestsDao {
     private Connection connection;
     private ResourceBundle bundle = DaoFactory.getBundle();
 
-    JDBCUserRequestDao(Connection connection) {
+    JDBCRequestsDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public void create(Request item) {
+
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("request.create"))) {
             statement.setInt(1, item.getTracker().getId());
             statement.setInt(2, item.getActivity().getId());
             statement.setString(3, item.getType().toString());
+            if (item.getType() == Request.RequestType.REMOVE) {
+                statement.setInt(4, item.getActivity().getId());
+            }
+            else {
+                statement.setNull(4, Types.INTEGER);
+            }
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

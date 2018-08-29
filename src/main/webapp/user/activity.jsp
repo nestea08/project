@@ -16,16 +16,22 @@
     <title>Time Tracking</title>
 </head>
 <body>
-    <c:out value="${requestScope.trackedItem.title}"/><br/>
-    <c:out value="${requestScope.trackedItem.description}"/><br/>
-    <c:out value="${requestScope.trackedItem.spentTime}"/><br/>
+    <label><fmt:message key="activity.title"/>: <c:out value="${requestScope.trackedItem.title}"/></label><br/>
+    <label><fmt:message key="activity.description"/>: <c:out value="${requestScope.trackedItem.description}"/></label><br/>
+    <label><fmt:message key="activity.spentTime"/>: <c:out value="${requestScope.trackedItem.spentTime}"/>
+        <fmt:message key="activity.hours"/></label><br/>
 
     <form action="" method="post">
-        Add spent time on activity<br/>
+        <fmt:message key="activity.addSpentTime"/>
         <input type="number" name="spentTime"/>
         <input type="submit" value="Change"/>
     </form>
-    <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.trackedItem.id}"> <fmt:message key="activity.finish"/></a>
+
+    <c:if test="${not empty requestScope.exception}">
+        <fmt:message key="${requestScope.exception}"/><br/>
+    </c:if>
+
+    <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.trackedItem.id}"> <fmt:message key="activity.finish"/></a><br/>
     <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
 </body>
 </html>

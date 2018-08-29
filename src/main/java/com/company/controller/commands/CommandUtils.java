@@ -1,6 +1,7 @@
 package com.company.controller.commands;
 
 import com.company.controller.Pagination;
+import com.company.model.entities.Activity;
 import com.company.model.entities.User;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.sun.deploy.net.HttpRequest;
@@ -16,26 +17,28 @@ public class CommandUtils {
         session.setAttribute("user", user.getNickname());
         session.setAttribute("role", user.getRole());
         session.setAttribute("userId", user.getId());
+        session.setAttribute("email", user.getLogin());
     }
 
     static void removeUserFromSession(HttpSession session) {
         session.removeAttribute("user");
         session.removeAttribute("role");
         session.removeAttribute("userId");
+        session.removeAttribute("email");
     }
 
-    static boolean isLogged(ServletContext context, String nickname) {
-        return getLoggedUsers(context).contains(nickname);
+    static boolean isLogged(ServletContext context, String email) {
+        return getLoggedUsers(context).contains(email);
     }
 
     static void logUser(ServletContext context, User user) {
         HashSet<String> loggedUsers = getLoggedUsers(context);
-        loggedUsers.add(user.getNickname());
+        loggedUsers.add(user.getLogin());
     }
 
-    static void removeLoggedUser(ServletContext context, String nickname) {
+    static void removeLoggedUser(ServletContext context, String email) {
         HashSet<String> loggedUsers = getLoggedUsers(context);
-        loggedUsers.remove(nickname);
+        loggedUsers.remove(email);
     }
 
     public static void setCurrentPageForPagination(HttpServletRequest request,
@@ -46,14 +49,10 @@ public class CommandUtils {
         }
     }
 
-    public static Locale getLocale(HttpServletRequest request) {
-        return new Locale(request.getSession().getAttribute("language").toString());
-    }
-
     private static HashSet<String> getLoggedUsers(ServletContext context) {
         Object obj = context.getAttribute("loggedUsers");
         if (!(obj instanceof HashSet<?>)) {
-            throw new IllegalArgumentException("Logged guests are not initialized");
+            throw new IllegalArgumentException("Logged users are not initialized");
         }
         return (HashSet<String>) obj;
     }

@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
-        String nickname = request.getSession().getAttribute("user").toString();
+        String email = request.getSession().getAttribute("email").toString();
         CommandUtils.removeUserFromSession(request.getSession());
-        CommandUtils.removeLoggedUser(request.getServletContext(), nickname);
+        CommandUtils.removeLoggedUser(request.getServletContext(), email);
         return request.getContextPath() + "/redirect/index.jsp";
     }
 }

@@ -1,8 +1,5 @@
 package com.company.controller.commands.exceptions;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class NotValidEmailException extends Exception {
     private String email;
 
@@ -17,6 +14,6 @@ public class NotValidEmailException extends Exception {
 
     @Override
     public String getLocalizedMessage() {
-        return "exceptions.notValidEmail";
+        return "exceptions.invalidEmail";
     }
 }

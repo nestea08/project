@@ -12,7 +12,7 @@ public abstract class DaoFactory {
     public abstract UserDao createUserDao();
     public abstract TrackerUserDao createTrackerUserDao();
     public abstract ActivityDao createActivityDao();
-    public abstract UserRequestDao createUserRequestDao();
+    public abstract RequestsDao createUserRequestDao();
     public abstract HistoryItemDao createHistoryItemDao();
     public abstract TransactionsDao createTransactionsDao();
 

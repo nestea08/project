@@ -28,7 +28,7 @@ public class RequestMapper implements GenericMapper<Request>{
     public Request extractWithSpecifiedReferences(ResultSet set, TrackerUser trackerUser, Activity activity)
             throws SQLException {
         int id = set.getInt("request_id");
-        String type = set.getString("command");
+        String type = set.getString("type");
         Request.RequestType requestType = type.equals("ADD") ?
                 Request.RequestType.ADD : Request.RequestType.REMOVE;
         return new Request(id, trackerUser, activity, requestType);

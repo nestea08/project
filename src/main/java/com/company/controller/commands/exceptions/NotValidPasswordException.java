@@ -1,8 +1,5 @@
 package com.company.controller.commands.exceptions;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class NotValidPasswordException extends Exception {
     private String password;
 
@@ -17,6 +14,6 @@ public class NotValidPasswordException extends Exception {
 
     @Override
     public String getLocalizedMessage() {
-        return "exceptions.notValidPassword";
+        return "exceptions.invalidPassword";
     }
 }

@@ -1,12 +1,10 @@
 package com.company.controller;
 
 import com.company.controller.commands.*;
-import com.company.controller.commands.admin.ExecuteUserRequestCommand;
-import com.company.controller.commands.admin.RefuseUserRequestCommand;
-import com.company.controller.commands.admin.ShowTrackingHistoryCommand;
-import com.company.controller.commands.admin.ShowUserRequestsCommand;
+import com.company.controller.commands.admin.*;
 import com.company.controller.commands.user.*;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +19,7 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init() {
+        getServletContext().setAttribute("loggedUsers", new HashSet<String>());
         commands = new HashMap<>();
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
@@ -28,6 +27,7 @@ public class Servlet extends HttpServlet {
         commands.put("exception", new ExceptionCommand());
         commands.put("user/activities", new FindActivitiesCommand());
         commands.put("user/activity", new ActivityTrackingCommand());
+        commands.put("user/time_tracking", new TimeTrackingCommand());
         commands.put("user/activity_remove", new RemoveActivityCommand());
         commands.put("user/activity_finish", new FinishActivityCommand());
         commands.put("user/possible_activities", new GetPossibleActivitiesCommand());
@@ -36,6 +36,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/history", new ShowTrackingHistoryCommand());
         commands.put("admin/execute_request", new ExecuteUserRequestCommand());
         commands.put("admin/refuse_request", new RefuseUserRequestCommand());
+        commands.put("admin/create_activity", new CreateActivityCommand());
     }
 
     @Override

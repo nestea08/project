@@ -26,8 +26,8 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public UserRequestDao createUserRequestDao() {
-        return new JDBCUserRequestDao(getConnection());
+    public RequestsDao createUserRequestDao() {
+        return new JDBCRequestsDao(getConnection());
     }
 
     @Override

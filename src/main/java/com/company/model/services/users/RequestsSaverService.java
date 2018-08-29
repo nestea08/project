@@ -1,6 +1,7 @@
 package com.company.model.services.users;
 
 import com.company.model.entities.*;
+import com.company.model.exceptions.DuplicateRequestException;
 
 public class RequestsSaverService {
     private UsersUtils utils;
@@ -13,7 +14,8 @@ public class RequestsSaverService {
         this.utils = utils;
     }
 
-    public void saveTrackerUserRequest(int userId, int activityId, Request.RequestType requestType) {
+    public void saveTrackerUserRequest(int userId, int activityId,
+                                       Request.RequestType requestType) throws DuplicateRequestException {
         TrackerUser user = utils.getTrackerUserById(userId);
         Activity activity = utils.getActivityById(activityId);
         utils.createUserRequest(new Request(user, activity, requestType));

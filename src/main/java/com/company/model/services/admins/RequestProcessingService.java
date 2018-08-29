@@ -2,6 +2,7 @@ package com.company.model.services.admins;
 
 
 import com.company.model.entities.Request;
+import com.company.model.exceptions.UnknownRequestException;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class RequestProcessingService {
         return utils.getAllUserRequests();
     }
 
-    public void executeUserRequest(int requestId) {
+    public void executeUserRequest(int requestId) throws UnknownRequestException {
         Request request = utils.getUserRequestById(requestId);
         if (request.getType() == Request.RequestType.ADD) {
             utils.executeAdditionRequest(request);
@@ -30,7 +31,7 @@ public class RequestProcessingService {
         }
     }
 
-    public void refuseUserRequest(int requestId) {
+    public void refuseUserRequest(int requestId) throws UnknownRequestException {
         Request request = utils.getUserRequestById(requestId);
         utils.deleteUserRequest(request);
     }

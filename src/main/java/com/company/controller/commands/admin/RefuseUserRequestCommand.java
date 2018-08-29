@@ -1,6 +1,7 @@
 package com.company.controller.commands.admin;
 
 import com.company.controller.commands.Command;
+import com.company.model.exceptions.UnknownRequestException;
 import com.company.model.services.admins.RequestProcessingService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,12 @@ public class RefuseUserRequestCommand implements Command {
     public String execute(HttpServletRequest request) {
         RequestProcessingService service = new RequestProcessingService();
         int requestId = Integer.parseInt(request.getParameter("id"));
-        service.refuseUserRequest(requestId);
-        return "/admin/request_refused.jsp";
+        try {
+            service.refuseUserRequest(requestId);
+        } catch (UnknownRequestException e) {
+            request.getSession().setAttribute("exception", e.getLocalizedMessage());
+            return request.getContextPath() + "/redirect/admin/admin_exception.jsp";
+        }
+        return request.getContextPath() + "/redirect/admin/request_refused.jsp";
     }
 }

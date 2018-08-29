@@ -1,5 +1,7 @@
 package com.company.model.entities.interfaces;
 
+import com.company.model.exceptions.InvalidSpentTimeException;
+
 public interface TrackedItem {
     int getId();
 
@@ -9,5 +11,5 @@ public interface TrackedItem {
 
     int getSpentTime();
 
-    TrackedItem plusSpentTime(int time);
+    TrackedItem plusSpentTime(int time) throws InvalidSpentTimeException;
 }

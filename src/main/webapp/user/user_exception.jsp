@@ -3,8 +3,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: vlad
-  Date: 11.08.2018
-  Time: 15:45
+  Date: 29.08.2018
+  Time: 12:00
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,13 +12,16 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
 <html>
-<head>
-    <title>Time Tracking</title>
-</head>
 <body>
-<fmt:message key="admin.hello"/><br/>
-<a href="${pageContext.request.contextPath}/admin/requests"><fmt:message key="admin.requests"/></a><br/>
-<a href="${pageContext.request.contextPath}/admin/history"><fmt:message key="admin.history"/></a><br/>
-<a href="${pageContext.request.contextPath}/admin/create_activity.jsp"><fmt:message key="admin.createActivity"/></a>
+    <c:choose>
+        <c:when test="${not empty sessionScope.exception}">
+            <fmt:message key="${sessionScope.exception}"/>.
+        </c:when>
+        <c:otherwise>
+            <fmt:message key="exception.message"/>.
+        </c:otherwise>
+    </c:choose>
+    <br/>
+    <a href="${pageContext.request.contextPath}/user/user.jsp"><fmt:message key="exception.home"/></a>
 </body>
 </html>

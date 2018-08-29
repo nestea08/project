@@ -2,7 +2,10 @@ package com.company.model.services;
 
 import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.exceptions.DuplicateRequestException;
+import com.company.model.exceptions.InvalidSpentTimeException;
 import com.company.model.exceptions.NotUniqueNicknameException;
+import com.company.model.exceptions.UnknownRequestException;
 import com.company.model.services.admins.AdminsUtils;
 import com.company.model.services.admins.RequestProcessingService;
 import com.company.model.services.users.*;
@@ -26,7 +29,7 @@ public class ServicesTest {
     private TrackedItem trackedItem;
 
     @Before
-    public void init() {
+    public void init() throws InvalidSpentTimeException {
         testingUser = new TrackerUser.Builder("user123", "user@mail.ru", "1111").build();
         testingActivity = new Activity(1, "activity1", "......");
         trackedItem = new TimeTrackedItem(testingActivity, 0);
@@ -59,7 +62,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void timeTrackingServiceTrackTimeTest() {
+    public void timeTrackingServiceTrackTimeTest() throws InvalidSpentTimeException {
         TimeTrackingService service = new TimeTrackingService(usersUtils);
         testingUser.addTrackedItem(trackedItem);
         when(usersUtils.getTrackerUserById(1)).thenReturn(testingUser);
@@ -68,7 +71,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void userRequestsServiceAddUserRequestTest() {
+    public void userRequestsServiceAddUserRequestTest() throws DuplicateRequestException {
         RequestsSaverService service = new RequestsSaverService(usersUtils);
         when(usersUtils.getTrackerUserById(1)).thenReturn(testingUser);
         when(usersUtils.getActivityById(1)).thenReturn(testingActivity);
@@ -78,7 +81,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void requestProcessingServiceExecuteUserRequestTest() {
+    public void requestProcessingServiceExecuteUserRequestTest() throws UnknownRequestException {
         RequestProcessingService service = new RequestProcessingService(adminsUtils);
         Request request = new Request(testingUser, testingActivity, Request.RequestType.ADD);
         when(adminsUtils.getUserRequestById(1)).thenReturn(request);
@@ -87,7 +90,7 @@ public class ServicesTest {
     }
 
     @Test
-    public void requestProcessingServiceRefuseUserRequestTest() {
+    public void requestProcessingServiceRefuseUserRequestTest() throws UnknownRequestException {
         RequestProcessingService service = new RequestProcessingService(adminsUtils);
         Request request = new Request(testingUser, testingActivity, Request.RequestType.ADD);
         when(adminsUtils.getUserRequestById(1)).thenReturn(request);

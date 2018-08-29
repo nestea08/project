@@ -38,5 +38,6 @@
             <a href="?page=${i}"><c:out value="${i}"/></a>
         </c:forEach>
 
+        <a href="${pageContext.request.contextPath}/admin/admin.jsp"><fmt:message key="common.back"/></a>
     </body>
 </html>

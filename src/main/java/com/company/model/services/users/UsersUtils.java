@@ -5,6 +5,7 @@ import com.company.model.dao.impl.JDBCDaoFactory;
 import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
+import com.company.model.exceptions.DuplicateRequestException;
 
 import java.util.List;
 
@@ -42,11 +43,11 @@ public class UsersUtils {
         }
     }
 
-    public void createUserRequest(Request request) {
-        try (UserRequestDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+    public void createUserRequest(Request request) throws DuplicateRequestException {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
             dao.create(request);
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new DuplicateRequestException();
         }
     }
 

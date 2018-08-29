@@ -5,8 +5,8 @@ import com.company.model.dao.impl.JDBCDaoFactory;
 import com.company.model.entities.Activity;
 import com.company.model.entities.HistoryItem;
 import com.company.model.entities.Request;
-import com.company.model.entities.interfaces.TrackedItem;
-import com.company.model.entities.interfaces.Tracker;
+import com.company.model.exceptions.NotUniqueActivityException;
+import com.company.model.exceptions.UnknownRequestException;
 
 import java.util.List;
 
@@ -28,16 +28,24 @@ public class AdminsUtils {
         }
     }
 
-    public Request getUserRequestById(int id) {
-        try (UserRequestDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+    public void createActivity(Activity activity) throws NotUniqueActivityException {
+        try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
+            dao.create(activity);
+        } catch (Exception e) {
+            throw new NotUniqueActivityException(activity);
+        }
+    }
+
+    public Request getUserRequestById(int id) throws UnknownRequestException {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
             return dao.findById(id);
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new UnknownRequestException(id);
         }
     }
 
     public List<Request> getAllUserRequests() {
-        try (UserRequestDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
             return dao.findAll();
         } catch (Exception e) {
             throw new RuntimeException();
@@ -53,7 +61,7 @@ public class AdminsUtils {
     }
 
     public void deleteUserRequest(Request request) {
-        try (UserRequestDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
             dao.delete(request);
         } catch (Exception e) {
             throw new RuntimeException();

@@ -7,8 +7,7 @@ import java.util.HashSet;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        httpSessionEvent.getSession().getServletContext().
-                setAttribute("loggedUsers", new HashSet<String>());
+
     }
 
     @Override
@@ -16,8 +15,8 @@ public class SessionListener implements HttpSessionListener {
         HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute("loggedUsers");
-        String userName = (String) httpSessionEvent.getSession()
-                .getAttribute("userName");
-        loggedUsers.remove(userName);
+        String email = (String) httpSessionEvent.getSession()
+                .getAttribute("email");
+        loggedUsers.remove(email);
     }
 }

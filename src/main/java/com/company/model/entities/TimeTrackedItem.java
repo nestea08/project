@@ -1,6 +1,7 @@
 package com.company.model.entities;
 
 import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.exceptions.InvalidSpentTimeException;
 
 import java.util.Objects;
 
@@ -11,13 +12,17 @@ public class TimeTrackedItem implements TrackedItem{
     private Activity activity;
     private int spentTime;
 
-    public TimeTrackedItem(Activity activity, int spentTime) {
+    public TimeTrackedItem(Activity activity, int spentTime)
+            throws InvalidSpentTimeException {
+        if (spentTime < 0 || spentTime > 10000) {
+            throw new InvalidSpentTimeException(spentTime);
+        }
         this.activity= activity;
         this.spentTime = spentTime;
     }
 
     @Override
-    public TrackedItem plusSpentTime(int time) {
+    public TrackedItem plusSpentTime(int time) throws InvalidSpentTimeException {
         return new TimeTrackedItem(activity, spentTime + time);
     }
 
