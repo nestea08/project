@@ -1,13 +1,12 @@
 package com.company.controller.commands;
 
-import com.company.controller.commands.exceptions.NotValidEmailException;
-import com.company.controller.commands.exceptions.NotValidPasswordException;
+import com.company.controller.commands.exceptions.InvalidEmailException;
+import com.company.controller.commands.exceptions.InvalidPasswordException;
 import com.company.model.entities.User;
 import com.company.model.exceptions.UnknownUserException;
 import com.company.model.services.guests.SignInService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
 
 public class LoginCommand implements Command {
     @Override
@@ -33,7 +32,7 @@ public class LoginCommand implements Command {
     }
 
     private User findUser(HttpServletRequest request, String email, String password)
-            throws NotValidPasswordException, NotValidEmailException, UnknownUserException {
+            throws InvalidPasswordException, InvalidEmailException, UnknownUserException {
         SignInService service = new SignInService();
         checkEmailAndPassword(email, password);
         checkLoggedUsers(request, email);
@@ -41,7 +40,7 @@ public class LoginCommand implements Command {
     }
 
     private void checkEmailAndPassword(String email, String password)
-            throws NotValidPasswordException, NotValidEmailException {
+            throws InvalidPasswordException, InvalidEmailException {
         checkEmail(email);
         checkPassword(password);
     }
@@ -53,15 +52,15 @@ public class LoginCommand implements Command {
     }
 
 
-    private void checkEmail(String email) throws NotValidEmailException {
+    private void checkEmail(String email) throws InvalidEmailException {
         if (InputValidator.strNotMatchesRegex(email, InputValidator.EMAIL_REGEX)) {
-            throw new NotValidEmailException(email);
+            throw new InvalidEmailException(email);
         }
     }
 
-    private void checkPassword(String password) throws NotValidPasswordException {
+    private void checkPassword(String password) throws InvalidPasswordException {
         if (InputValidator.strNotMatchesRegex(password, InputValidator.PASSWORD_REGEX)) {
-            throw new NotValidPasswordException(password);
+            throw new InvalidPasswordException(password);
         }
     }
 

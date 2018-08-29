@@ -1,9 +1,9 @@
 package com.company.controller.commands.exceptions;
 
-public class NotValidDescriptionException extends Exception{
+public class InvalidDescriptionException extends Exception{
     private String description;
 
-    public NotValidDescriptionException(String description) {
+    public InvalidDescriptionException(String description) {
         this.description = description;
     }
 

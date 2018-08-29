@@ -1,8 +1,8 @@
 package com.company.controller.commands;
 
-import com.company.controller.commands.exceptions.NotValidEmailException;
-import com.company.controller.commands.exceptions.NotValidNicknameException;
-import com.company.controller.commands.exceptions.NotValidPasswordException;
+import com.company.controller.commands.exceptions.InvalidEmailException;
+import com.company.controller.commands.exceptions.InvalidNicknameException;
+import com.company.controller.commands.exceptions.InvalidPasswordException;
 import com.company.model.entities.User;
 import com.company.model.services.guests.SignUpService;
 
@@ -30,27 +30,27 @@ public class SignupCommand implements Command {
     }
 
     private void checkInput(String nickname, String email, String password)
-            throws NotValidEmailException, NotValidNicknameException, NotValidPasswordException {
+            throws InvalidEmailException, InvalidNicknameException, InvalidPasswordException {
         checkNickname(nickname);
         checkEmail(email);
         checkPassword(password);
     }
 
-    private void checkNickname(String nickname) throws NotValidNicknameException {
+    private void checkNickname(String nickname) throws InvalidNicknameException {
         if (InputValidator.strNotMatchesRegex(nickname, InputValidator.NICKNAME_REGEX)) {
-            throw new NotValidNicknameException(nickname);
+            throw new InvalidNicknameException(nickname);
         }
     }
 
-    private void checkEmail(String email) throws NotValidEmailException {
+    private void checkEmail(String email) throws InvalidEmailException {
         if (InputValidator.strNotMatchesRegex(email, InputValidator.EMAIL_REGEX)) {
-            throw new NotValidEmailException(email);
+            throw new InvalidEmailException(email);
         }
     }
 
-    private void checkPassword(String password) throws NotValidPasswordException {
+    private void checkPassword(String password) throws InvalidPasswordException {
         if (InputValidator.strNotMatchesRegex(password, InputValidator.PASSWORD_REGEX)) {
-            throw new NotValidPasswordException(password);
+            throw new InvalidPasswordException(password);
         }
     }
 }

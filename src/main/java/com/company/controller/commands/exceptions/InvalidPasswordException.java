@@ -1,9 +1,9 @@
 package com.company.controller.commands.exceptions;
 
-public class NotValidPasswordException extends Exception {
+public class InvalidPasswordException extends Exception {
     private String password;
 
-    public NotValidPasswordException(String password) {
+    public InvalidPasswordException(String password) {
         this.password = password;
     }
 

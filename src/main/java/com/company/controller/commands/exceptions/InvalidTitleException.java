@@ -1,9 +1,9 @@
 package com.company.controller.commands.exceptions;
 
-public class NotValidTitleException extends Exception {
+public class InvalidTitleException extends Exception {
     private String title;
 
-    public NotValidTitleException(String title) {
+    public InvalidTitleException(String title) {
         this.title = title;
     }
 

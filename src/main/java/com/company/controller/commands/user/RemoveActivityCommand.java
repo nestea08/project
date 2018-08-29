@@ -19,6 +19,6 @@ public class RemoveActivityCommand implements Command {
             request.getSession().setAttribute("exception", e.getLocalizedMessage());
             return request.getContextPath() + "/redirect/user/user_exception.jsp";
         }
-        return request.getContextPath() + "/redirect/user/remove.jsp";
+        return request.getContextPath() + "/redirect/user/activity_removed.jsp";
     }
 }

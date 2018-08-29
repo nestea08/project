@@ -1,9 +1,9 @@
 package com.company.controller.commands.exceptions;
 
-public class NotValidEmailException extends Exception {
+public class InvalidEmailException extends Exception {
     private String email;
 
-    public NotValidEmailException(String email) {
+    public InvalidEmailException(String email) {
         this.email = email;
     }
 

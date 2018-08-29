@@ -2,8 +2,8 @@ package com.company.controller.commands.admin;
 
 import com.company.controller.commands.Command;
 import com.company.controller.commands.InputValidator;
-import com.company.controller.commands.exceptions.NotValidDescriptionException;
-import com.company.controller.commands.exceptions.NotValidTitleException;
+import com.company.controller.commands.exceptions.InvalidDescriptionException;
+import com.company.controller.commands.exceptions.InvalidTitleException;
 import com.company.model.exceptions.NotUniqueActivityException;
 import com.company.model.services.admins.ActivityCreationService;
 
@@ -26,21 +26,21 @@ public class CreateActivityCommand implements Command {
     }
 
     private void checkActivityCreation(String title, String description)
-            throws NotValidTitleException, NotValidDescriptionException, NotUniqueActivityException {
+            throws InvalidTitleException, InvalidDescriptionException, NotUniqueActivityException {
         checkTitleValidity(title);
         checkDescriptionValidity(description);
         createActivity(title, description);
     }
 
-    private void checkTitleValidity(String title) throws NotValidTitleException {
+    private void checkTitleValidity(String title) throws InvalidTitleException {
         if (InputValidator.strNotMatchesRegex(title, InputValidator.TITLE_REGEX)) {
-            throw new NotValidTitleException(title);
+            throw new InvalidTitleException(title);
         }
     }
 
-    private void checkDescriptionValidity(String description) throws NotValidDescriptionException {
+    private void checkDescriptionValidity(String description) throws InvalidDescriptionException {
         if (InputValidator.strNotMatchesRegex(description, InputValidator.DESCRIPTION_REGEX)) {
-            throw new NotValidDescriptionException(description);
+            throw new InvalidDescriptionException(description);
         }
     }
 
