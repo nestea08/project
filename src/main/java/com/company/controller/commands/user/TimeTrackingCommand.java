@@ -1,8 +1,7 @@
 package com.company.controller.commands.user;
 
 import com.company.controller.commands.Command;
-import com.company.controller.commands.CommandUtils;
-import com.company.controller.commands.InputValidator;
+import com.company.controller.InputValidator;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.exceptions.InvalidSpentTimeException;
 import com.company.model.services.users.TimeTrackingService;

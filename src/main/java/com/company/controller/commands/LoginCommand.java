@@ -1,5 +1,6 @@
 package com.company.controller.commands;
 
+import com.company.controller.InputValidator;
 import com.company.controller.commands.exceptions.InvalidEmailException;
 import com.company.controller.commands.exceptions.InvalidPasswordException;
 import com.company.model.entities.User;
