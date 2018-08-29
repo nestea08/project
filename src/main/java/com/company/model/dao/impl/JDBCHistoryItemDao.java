@@ -6,10 +6,12 @@ import com.company.model.dao.mappers.HistoryItemMapper;
 import com.company.model.dao.mappers.TrackerUserMapper;
 import com.company.model.entities.HistoryItem;
 import com.company.model.entities.TrackerUser;
+import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 public class JDBCHistoryItemDao implements HistoryItemDao {
@@ -22,8 +24,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
 
     @Override
     public void create(HistoryItem item) {
-        throw new RuntimeException();
-        /*try (PreparedStatement statement = connection.prepareStatement
+        try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("histItem.create"))) {
             statement.setString(1, item.getTitle());
             statement.setInt(2, item.getSpentTime());
@@ -32,7 +33,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
-        }*/
+        }
     }
 
     @Override
@@ -91,6 +92,25 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
+        }
+    }
+
+    public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem)
+            throws SQLException {
+        connection.setAutoCommit(false);
+        removeTrackedItem(tracker.getId(), trackedItem.getId());
+        HistoryItem historyItem = new HistoryItem(trackedItem.getTitle(),
+                tracker, trackedItem.getSpentTime(), LocalDate.now());
+        create(historyItem);
+        connection.commit();
+    }
+
+    private void removeTrackedItem(int trackerId, int trackedItemId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("trackingItem.remove"))) {
+            statement.setInt(1, trackerId);
+            statement.setInt(2, trackedItemId);
+            statement.executeUpdate();
         }
     }
 

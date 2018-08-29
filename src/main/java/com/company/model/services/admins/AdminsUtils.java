@@ -13,7 +13,7 @@ import java.util.List;
 public class AdminsUtils {
 
     public void executeAdditionRequest(Request request) {
-        try (TransactionsDao dao = JDBCDaoFactory.getInstance().createTransactionsDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.executeAdditionRequest(request);
         } catch (Exception e) {
             throw new RuntimeException();
@@ -21,7 +21,7 @@ public class AdminsUtils {
     }
 
     public void executeRemovingRequest(Request request) {
-        try (TransactionsDao dao = JDBCDaoFactory.getInstance().createTransactionsDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.executeRemovingRequest(request);
         } catch (Exception e) {
             throw new RuntimeException();
@@ -37,7 +37,7 @@ public class AdminsUtils {
     }
 
     public Request getUserRequestById(int id) throws UnknownRequestException {
-        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             return dao.findById(id);
         } catch (Exception e) {
             throw new UnknownRequestException(id);
@@ -45,7 +45,7 @@ public class AdminsUtils {
     }
 
     public List<Request> getAllUserRequests() {
-        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             return dao.findAll();
         } catch (Exception e) {
             throw new RuntimeException();
@@ -61,7 +61,7 @@ public class AdminsUtils {
     }
 
     public void deleteUserRequest(Request request) {
-        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.delete(request);
         } catch (Exception e) {
             throw new RuntimeException();

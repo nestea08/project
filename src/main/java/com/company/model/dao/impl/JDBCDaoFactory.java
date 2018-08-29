@@ -26,18 +26,13 @@ public class JDBCDaoFactory extends DaoFactory {
     }
 
     @Override
-    public RequestsDao createUserRequestDao() {
+    public RequestsDao createRequestDao() {
         return new JDBCRequestsDao(getConnection());
     }
 
     @Override
     public HistoryItemDao createHistoryItemDao() {
         return new JDBCHistoryItemDao(getConnection());
-    }
-
-    @Override
-    public TransactionsDao createTransactionsDao() {
-        return new JDBCTransactionsDao(getConnection());
     }
 
     private Connection getConnection(){

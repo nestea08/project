@@ -44,7 +44,7 @@ public class UsersUtils {
     }
 
     public void createUserRequest(Request request) throws DuplicateRequestException {
-        try (RequestsDao dao = JDBCDaoFactory.getInstance().createUserRequestDao()) {
+        try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.create(request);
         } catch (Exception e) {
             throw new DuplicateRequestException();
@@ -52,7 +52,7 @@ public class UsersUtils {
     }
 
     public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem) {
-        try (TransactionsDao dao = JDBCDaoFactory.getInstance().createTransactionsDao()) {
+        try (HistoryItemDao dao = JDBCDaoFactory.getInstance().createHistoryItemDao()) {
             dao.transformTrackedIntoHistoryItem(tracker, trackedItem);
         } catch (Exception e) {
             throw new RuntimeException();

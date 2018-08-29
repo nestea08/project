@@ -99,6 +99,40 @@ public class JDBCRequestsDao implements RequestsDao {
     }
 
     @Override
+    public void executeAdditionRequest(Request request) throws SQLException {
+        connection.setAutoCommit(false);
+        addTrackedItem(request.getTracker().getId(), request.getActivity().getId());
+        delete(request);
+        connection.commit();
+    }
+
+    @Override
+    public void executeRemovingRequest(Request request) throws SQLException {
+        connection.setAutoCommit(false);
+        removeTrackedItem(request.getTracker().getId(), request.getActivity().getId());
+        delete(request);
+        connection.commit();
+    }
+
+    private void addTrackedItem(int trackerId, int trackedItemId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("trackingItem.add"))) {
+            statement.setInt(1, trackerId);
+            statement.setInt(2, trackedItemId);
+            statement.executeUpdate();
+        }
+    }
+
+    private void removeTrackedItem(int trackerId, int trackedItemId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("trackingItem.remove"))) {
+            statement.setInt(1, trackerId);
+            statement.setInt(2, trackedItemId);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
     public void close() throws Exception {
         try {
             connection.close();
