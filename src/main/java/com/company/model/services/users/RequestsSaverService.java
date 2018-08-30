@@ -14,8 +14,8 @@ public class RequestsSaverService {
         this.utils = utils;
     }
 
-    public void saveTrackerUserRequest(int userId, int activityId,
-                                       Request.RequestType requestType) throws DuplicateRequestException {
+    public void saveTrackerRequest(int userId, int activityId,
+                                   Request.RequestType requestType) throws DuplicateRequestException {
         TrackerUser user = utils.getTrackerUserById(userId);
         Activity activity = utils.getActivityById(activityId);
         utils.createUserRequest(new Request(user, activity, requestType));

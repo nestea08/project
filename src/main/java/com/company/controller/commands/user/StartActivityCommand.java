@@ -14,7 +14,7 @@ public class StartActivityCommand implements Command {
         int userId = UserCommandUtils.getUserIdFromSession(request.getSession());
         RequestsSaverService service = new RequestsSaverService();
         try {
-            service.saveTrackerUserRequest(userId, activityId, Request.RequestType.ADD);
+            service.saveTrackerRequest(userId, activityId, Request.RequestType.ADD);
         } catch (DuplicateRequestException e) {
             return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }

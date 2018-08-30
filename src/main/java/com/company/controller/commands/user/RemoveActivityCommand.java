@@ -14,7 +14,7 @@ public class RemoveActivityCommand implements Command {
         int activityId = Integer.parseInt(request.getParameter("id"));
         int userId = UserCommandUtils.getUserIdFromSession(request.getSession());
         try {
-            service.saveTrackerUserRequest(userId, activityId, Request.RequestType.REMOVE);
+            service.saveTrackerRequest(userId, activityId, Request.RequestType.REMOVE);
         } catch (DuplicateRequestException e) {
             return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }

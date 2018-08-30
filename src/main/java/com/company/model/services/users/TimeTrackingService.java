@@ -30,10 +30,10 @@ public class TimeTrackingService {
         return tracker.getTrackedItemById(trackedId);
     }
 
-    public TrackedItem trackTime(int userId, int trackedId, int time)
+    public TrackedItem trackTime(int userId, int trackedId, int spentTime)
             throws InvalidSpentTimeException {
         Tracker tracker = utils.getTrackerUserById(userId);
-        TrackedItem trackedItem = tracker.getTrackedItemById(trackedId).plusSpentTime(time);
+        TrackedItem trackedItem = tracker.getTrackedItemById(trackedId).plusSpentTime(spentTime);
         utils.updateSpentTime(tracker, trackedItem);
         return trackedItem;
     }
