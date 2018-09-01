@@ -3,8 +3,8 @@ package com.company.model.dao.impl;
 import com.company.model.dao.ActivityDao;
 import com.company.model.dao.DaoFactory;
 import com.company.model.dao.mappers.*;
+import com.company.model.dto.LocalizedActivityDto;
 import com.company.model.entities.*;
-import com.company.model.entities.interfaces.Tracker;
 
 import java.sql.*;
 import java.util.*;
@@ -23,6 +23,20 @@ public class JDBCActivityDao implements ActivityDao {
                 (bundle.getString("activity.create"))) {
             statement.setString(1, item.getTitle());
             statement.setString(2, item.getDescription());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void createLocalized(LocalizedActivityDto item) {
+        try (PreparedStatement statement = connection.prepareStatement
+                (bundle.getString("activity.createLocalized"))) {
+            statement.setString(1, item.getEnTitle());
+            statement.setString(2, item.getRuTitle());
+            statement.setString(3, item.getEnDescription());
+            statement.setString(4, item.getRuDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

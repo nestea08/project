@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 public abstract class DaoFactory {
     private static DaoFactory instance;
-    private static ResourceBundle bundle = ResourceBundle.getBundle("dao");
+    private static ResourceBundle bundle = ResourceBundle.getBundle("dao", new Locale("en"));
 
     public abstract UserDao createUserDao();
     public abstract TrackerUserDao createTrackerUserDao();

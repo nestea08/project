@@ -13,6 +13,7 @@
 <fmt:setBundle basename="mybundle"/>
 <html>
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Time Tracking</title>
 </head>
 <body>

@@ -8,11 +8,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="../master.jsp" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
 <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
 
     <body>
         <c:choose>

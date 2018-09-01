@@ -2,6 +2,7 @@ package com.company.model.services.admins;
 
 import com.company.model.dao.*;
 import com.company.model.dao.impl.JDBCDaoFactory;
+import com.company.model.dto.LocalizedActivityDto;
 import com.company.model.entities.Activity;
 import com.company.model.entities.HistoryItem;
 import com.company.model.entities.Request;
@@ -28,9 +29,9 @@ public class AdminsUtils {
         }
     }
 
-    public void createActivity(Activity activity) throws NotUniqueActivityException {
+    public void createActivity(LocalizedActivityDto activity) throws NotUniqueActivityException {
         try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
-            dao.create(activity);
+            dao.createLocalized(activity);
         } catch (Exception e) {
             throw new NotUniqueActivityException(activity);
         }

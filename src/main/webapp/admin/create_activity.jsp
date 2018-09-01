@@ -1,21 +1,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: vlad
-  Date: 28.08.2018
-  Time: 13:15
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="../master.jsp" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
 <html>
+    <head>
+
+    </head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
     <fmt:message key="createActivity.message"/>
     <form method="post" action="${pageContext.request.contextPath}/admin/create_activity">
-        <label><fmt:message key="activity.title"/>: <input type="text" name="title"></label><br/>
-        <label><fmt:message key="activity.description"/>: <textarea name="description"></textarea></label><br/>
+        <label><fmt:message key="createActivity.enTitle"/>: <input type="text" name="enTitle" ></label>
+        <label><fmt:message key="createActivity.ruTitle"/>: <input type="text" name="ruTitle" ></label><br/>
+        <label><fmt:message key="createActivity.enDescription"/>: <textarea name="enDescription"></textarea></label>
+        <label><fmt:message key="createActivity.ruDescription"/>: <textarea name="ruDescription"></textarea></label><br/>
         <input type="submit" value="Create">
     </form>
     <c:if test="${not empty requestScope.exception}">
