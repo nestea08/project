@@ -1,7 +1,7 @@
 package com.company.model.exceptions;
 
 
-public class DuplicateRequestException extends Exception {
+public class DuplicateRequestException extends RuntimeException {
 
     @Override
     public String getMessage() {

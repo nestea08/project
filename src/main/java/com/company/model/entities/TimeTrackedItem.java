@@ -12,8 +12,7 @@ public class TimeTrackedItem implements TrackedItem{
     private Activity activity;
     private int spentTime;
 
-    public TimeTrackedItem(Activity activity, int spentTime)
-            throws InvalidSpentTimeException {
+    public TimeTrackedItem(Activity activity, int spentTime) {
         if (spentTime < 0 || spentTime > 10000) {
             throw new InvalidSpentTimeException(spentTime);
         }
@@ -22,7 +21,7 @@ public class TimeTrackedItem implements TrackedItem{
     }
 
     @Override
-    public TrackedItem plusSpentTime(int time) throws InvalidSpentTimeException {
+    public TrackedItem plusSpentTime(int time) {
         return new TimeTrackedItem(activity, spentTime + time);
     }
 

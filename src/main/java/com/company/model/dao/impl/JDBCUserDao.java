@@ -4,6 +4,8 @@ import com.company.model.dao.DaoFactory;
 import com.company.model.dao.UserDao;
 import com.company.model.dao.mappers.UserMapper;
 import com.company.model.entities.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.ResourceBundle;
 public class JDBCUserDao implements UserDao {
     private Connection connection;
     private ResourceBundle bundle = DaoFactory.getBundle();
+    private Logger logger = LogManager.getLogger(JDBCUserDao.class);
 
     JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -28,6 +31,7 @@ public class JDBCUserDao implements UserDao {
             statement.setString(4, item.getRole().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -42,6 +46,7 @@ public class JDBCUserDao implements UserDao {
             set.next();
             return userMapper.extractFromResultSet(set);
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -56,6 +61,7 @@ public class JDBCUserDao implements UserDao {
                 result.add(userMapper.extractFromResultSet(set));
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
         return result;
@@ -74,6 +80,7 @@ public class JDBCUserDao implements UserDao {
             }
             return userMapper.extractFromResultSet(set);
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -88,6 +95,7 @@ public class JDBCUserDao implements UserDao {
             statement.setInt(4, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -99,6 +107,7 @@ public class JDBCUserDao implements UserDao {
             statement.setInt(1, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -108,6 +117,7 @@ public class JDBCUserDao implements UserDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }

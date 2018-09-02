@@ -8,5 +8,5 @@ import java.sql.SQLException;
 
 public interface HistoryItemDao
         extends GenericDao<HistoryItem> {
-    void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem) throws SQLException;
+    void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem);
 }

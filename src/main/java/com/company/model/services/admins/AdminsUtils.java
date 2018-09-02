@@ -16,56 +16,42 @@ public class AdminsUtils {
     public void executeAdditionRequest(Request request) {
         try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.executeAdditionRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException();
         }
     }
 
     public void executeRemovingRequest(Request request) {
         try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.executeRemovingRequest(request);
-        } catch (Exception e) {
-            throw new RuntimeException();
         }
     }
 
-    public void createActivity(LocalizedActivityDto activity) throws NotUniqueActivityException {
+    public void createActivity(LocalizedActivityDto activity) {
         try (ActivityDao dao = JDBCDaoFactory.getInstance().createActivityDao()) {
             dao.createLocalized(activity);
-        } catch (Exception e) {
-            throw new NotUniqueActivityException(activity);
         }
     }
 
-    public Request getUserRequestById(int id) throws UnknownRequestException {
+    public Request getUserRequestById(int id) {
         try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             return dao.findById(id);
-        } catch (Exception e) {
-            throw new UnknownRequestException(id);
         }
     }
 
     public List<Request> getAllUserRequests() {
         try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             return dao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException();
         }
     }
 
     public List<HistoryItem> getAllHistoryItems() {
         try (HistoryItemDao dao = JDBCDaoFactory.getInstance().createHistoryItemDao()) {
             return dao.findAll();
-        } catch (Exception e) {
-            throw new RuntimeException();
         }
     }
 
     public void deleteUserRequest(Request request) {
         try (RequestsDao dao = JDBCDaoFactory.getInstance().createRequestDao()) {
             dao.delete(request);
-        } catch (Exception e) {
-            throw new RuntimeException();
         }
     }
 }

@@ -5,6 +5,9 @@ import com.company.model.dao.DaoFactory;
 import com.company.model.dao.mappers.*;
 import com.company.model.dto.LocalizedActivityDto;
 import com.company.model.entities.*;
+import com.company.model.exceptions.NotUniqueActivityException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
@@ -12,6 +15,7 @@ import java.util.*;
 public class JDBCActivityDao implements ActivityDao {
     private Connection connection;
     private ResourceBundle bundle = DaoFactory.getBundle();
+    private Logger logger = LogManager.getLogger(JDBCActivityDao.class);
 
     JDBCActivityDao(Connection connection) {
         this.connection = connection;
@@ -25,6 +29,7 @@ public class JDBCActivityDao implements ActivityDao {
             statement.setString(2, item.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -39,7 +44,8 @@ public class JDBCActivityDao implements ActivityDao {
             statement.setString(4, item.getRuDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            logger.error(e);
+            throw new NotUniqueActivityException(item);
         }
     }
 
@@ -55,6 +61,7 @@ public class JDBCActivityDao implements ActivityDao {
             set.next();
             return activityMapper.extractFromResultSet(set);
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -69,6 +76,7 @@ public class JDBCActivityDao implements ActivityDao {
                 result.add(activityMapper.extractFromResultSet(set));
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
         return result;
@@ -86,6 +94,7 @@ public class JDBCActivityDao implements ActivityDao {
                 result.add(activityMapper.extractFromResultSet(set));
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
         return result;
@@ -100,6 +109,7 @@ public class JDBCActivityDao implements ActivityDao {
             statement.setInt(3, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -111,6 +121,7 @@ public class JDBCActivityDao implements ActivityDao {
             statement.setInt(1, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -121,6 +132,7 @@ public class JDBCActivityDao implements ActivityDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }

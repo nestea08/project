@@ -8,6 +8,8 @@ import com.company.model.entities.HistoryItem;
 import com.company.model.entities.TrackerUser;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.sql.Date;
@@ -17,6 +19,7 @@ import java.util.*;
 public class JDBCHistoryItemDao implements HistoryItemDao {
     private Connection connection;
     private ResourceBundle bundle = DaoFactory.getBundle();
+    private Logger logger = LogManager.getLogger(JDBCHistoryItemDao.class);
 
     JDBCHistoryItemDao(Connection connection) {
         this.connection = connection;
@@ -32,6 +35,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             statement.setInt(4, item.getTracker().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -46,6 +50,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             set.next();
             return historyItemMapper.extractFromResultSet(set);
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -64,6 +69,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
                 result.add(historyItemMapper.extractWithSpecifiedReferences(set, tracker));
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
         return result;
@@ -80,6 +86,7 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             statement.setInt(5, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -91,34 +98,43 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
             statement.setInt(1, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
 
-    public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem)
-            throws SQLException {
-        connection.setAutoCommit(false);
-        removeTrackedItem(tracker.getId(), trackedItem.getId());
-        HistoryItem historyItem = new HistoryItem(trackedItem.getTitle(),
-                tracker, trackedItem.getSpentTime(), LocalDate.now());
-        create(historyItem);
-        connection.commit();
+    public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem) {
+        try {
+            connection.setAutoCommit(false);
+            removeTrackedItem(tracker.getId(), trackedItem.getId());
+            HistoryItem historyItem = new HistoryItem(trackedItem.getTitle(),
+                    tracker, trackedItem.getSpentTime(), LocalDate.now());
+            create(historyItem);
+            connection.commit();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException();
+        }
     }
 
-    private void removeTrackedItem(int trackerId, int trackedItemId) throws SQLException {
+    private void removeTrackedItem(int trackerId, int trackedItemId) {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("trackingItem.remove"))) {
             statement.setInt(1, trackerId);
             statement.setInt(2, trackedItemId);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException();
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }

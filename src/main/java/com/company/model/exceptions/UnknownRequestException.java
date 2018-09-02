@@ -1,6 +1,6 @@
 package com.company.model.exceptions;
 
-public class UnknownRequestException extends Exception {
+public class UnknownRequestException extends RuntimeException {
     private int requestId;
 
     public UnknownRequestException(int requestId) {

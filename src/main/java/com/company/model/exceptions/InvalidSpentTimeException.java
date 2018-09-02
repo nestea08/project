@@ -1,6 +1,6 @@
 package com.company.model.exceptions;
 
-public class InvalidSpentTimeException extends Exception {
+public class InvalidSpentTimeException extends RuntimeException {
     private int spentTime;
 
     public InvalidSpentTimeException(int spentTime) {

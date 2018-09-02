@@ -4,6 +4,10 @@ import com.company.model.dao.DaoFactory;
 import com.company.model.dao.RequestsDao;
 import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
+import com.company.model.exceptions.DuplicateRequestException;
+import com.company.model.exceptions.UnknownRequestException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
@@ -11,6 +15,7 @@ import java.util.*;
 public class JDBCRequestsDao implements RequestsDao {
     private Connection connection;
     private ResourceBundle bundle = DaoFactory.getBundle();
+    private Logger logger = LogManager.getLogger(JDBCRequestsDao.class);
 
     JDBCRequestsDao(Connection connection) {
         this.connection = connection;
@@ -18,7 +23,6 @@ public class JDBCRequestsDao implements RequestsDao {
 
     @Override
     public void create(Request item) {
-
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("request.create"))) {
             statement.setInt(1, item.getTracker().getId());
@@ -32,7 +36,8 @@ public class JDBCRequestsDao implements RequestsDao {
             }
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException();
+            logger.error(e);
+            throw new DuplicateRequestException();
         }
     }
 
@@ -46,7 +51,8 @@ public class JDBCRequestsDao implements RequestsDao {
             set.next();
             return mapper.extractFromResultSet(set);
         } catch (SQLException e) {
-            throw new RuntimeException();
+            logger.error(e);
+            throw new UnknownRequestException(id);
         }
     }
 
@@ -68,6 +74,7 @@ public class JDBCRequestsDao implements RequestsDao {
                 result.add(requestMapper.extractWithSpecifiedReferences(set, user, activity));
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
         return result;
@@ -82,6 +89,7 @@ public class JDBCRequestsDao implements RequestsDao {
             statement.setInt(3, item.getActivity().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -94,49 +102,67 @@ public class JDBCRequestsDao implements RequestsDao {
             statement.setInt(2, item.getActivity().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
 
     @Override
-    public void executeAdditionRequest(Request request) throws SQLException {
-        connection.setAutoCommit(false);
-        addTrackedItem(request.getTracker().getId(), request.getActivity().getId());
-        delete(request);
-        connection.commit();
+    public void executeAdditionRequest(Request request) {
+        try {
+            connection.setAutoCommit(false);
+            addTrackedItem(request.getTracker().getId(), request.getActivity().getId());
+            delete(request);
+            connection.commit();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException();
+        }
     }
 
     @Override
-    public void executeRemovingRequest(Request request) throws SQLException {
-        connection.setAutoCommit(false);
-        removeTrackedItem(request.getTracker().getId(), request.getActivity().getId());
-        delete(request);
-        connection.commit();
+    public void executeRemovingRequest(Request request) {
+        try {
+            connection.setAutoCommit(false);
+            removeTrackedItem(request.getTracker().getId(), request.getActivity().getId());
+            delete(request);
+            connection.commit();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException();
+        }
     }
 
-    private void addTrackedItem(int trackerId, int trackedItemId) throws SQLException {
+    private void addTrackedItem(int trackerId, int trackedItemId) {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("trackingItem.add"))) {
             statement.setInt(1, trackerId);
             statement.setInt(2, trackedItemId);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException();
         }
     }
 
-    private void removeTrackedItem(int trackerId, int trackedItemId) throws SQLException {
+    private void removeTrackedItem(int trackerId, int trackedItemId) {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("trackingItem.remove"))) {
             statement.setInt(1, trackerId);
             statement.setInt(2, trackedItemId);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException();
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }

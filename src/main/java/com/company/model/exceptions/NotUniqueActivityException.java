@@ -2,7 +2,7 @@ package com.company.model.exceptions;
 
 import com.company.model.dto.LocalizedActivityDto;
 
-public class NotUniqueActivityException extends Exception {
+public class NotUniqueActivityException extends RuntimeException {
     private LocalizedActivityDto activity;
 
     public NotUniqueActivityException(LocalizedActivityDto activity) {

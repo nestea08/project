@@ -6,6 +6,8 @@ import com.company.model.entities.*;
 import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.entities.interfaces.Tracker;
 import com.company.model.exceptions.InvalidSpentTimeException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
@@ -13,6 +15,7 @@ import java.util.*;
 public class JDBCTrackerUserDao implements TrackerUserDao {
     private Connection connection;
     private ResourceBundle bundle = DaoFactory.getBundle();
+    private Logger logger = LogManager.getLogger(JDBCTrackerUserDao.class);
 
     JDBCTrackerUserDao(Connection connection) {
         this.connection = connection;
@@ -23,6 +26,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()){
             dao.create(item);
         } catch (Exception e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -48,6 +52,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
             }
             return trackerUser;
         } catch (SQLException | InvalidSpentTimeException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -71,6 +76,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 result.add(user);
             }
         } catch (SQLException | InvalidSpentTimeException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
         return result;
@@ -81,6 +87,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()){
             dao.update(item);
         } catch (Exception e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -90,6 +97,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
         try (UserDao dao = JDBCDaoFactory.getInstance().createUserDao()){
             dao.delete(item);
         } catch (Exception e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
@@ -103,15 +111,17 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
             statement.setInt(3, trackedItem.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException();
         }
     }
