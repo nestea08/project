@@ -1,4 +1,4 @@
-package com.company.model.tests;
+package com.company.model.services;
 
 import com.company.model.entities.Activity;
 import com.company.model.entities.Request;

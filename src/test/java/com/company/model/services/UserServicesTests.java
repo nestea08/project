@@ -1,4 +1,4 @@
-package com.company.model.tests;
+package com.company.model.services;
 
 import com.company.model.entities.Activity;
 import com.company.model.entities.Request;
@@ -10,6 +10,8 @@ import com.company.model.exceptions.InvalidSpentTimeException;
 import com.company.model.services.users.RequestsSaverService;
 import com.company.model.services.users.TimeTrackingService;
 import com.company.model.services.users.UsersUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
