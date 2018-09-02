@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-
+        httpSessionEvent.getSession().setAttribute("language", "en");
     }
 
     @Override

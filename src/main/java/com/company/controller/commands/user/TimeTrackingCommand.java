@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 public class TimeTrackingCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
+        String language = request.getParameter("language");
+        if(language != null) {
+            return request.getContextPath() + "/redirect/user/activities?language=" + language;
+        }
         int userId = UserCommandUtils.getUserIdFromSession(request.getSession());
         TrackedItem trackedItem = UserCommandUtils.getTrackedItemFromSession(request.getSession());
         request.setAttribute("trackedItem", trackedItem);

@@ -16,11 +16,14 @@ public class LocaleFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        String language = servletRequest.getParameter("language");
-        if (language != null && !language.isEmpty()) {
-            LocaleService service = new LocaleService();
-            service.setLocale(new Locale(language));
+        HttpServletRequest req = (HttpServletRequest)servletRequest;
+        String language = req.getParameter("language");
+        if (language == null || language.isEmpty()) {
+            language = req.getSession().getAttribute("language").toString();
         }
+        LocaleService service = new LocaleService();
+        service.setLocale(new Locale(language));
+        System.out.println(language);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

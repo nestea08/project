@@ -52,7 +52,7 @@ public class CommandUtils {
 
     private static HashSet<String> getLoggedUsers(ServletContext context) {
         Object obj = context.getAttribute("loggedUsers");
-        if (!(obj instanceof HashSet<?>)) {
+        if (!(obj instanceof HashSet)) {
             throw new IllegalArgumentException("Logged users are not initialized");
         }
         return (HashSet<String>) obj;
