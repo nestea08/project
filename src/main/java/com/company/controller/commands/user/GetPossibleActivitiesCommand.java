@@ -4,7 +4,6 @@ import com.company.controller.Pagination;
 import com.company.controller.commands.Command;
 import com.company.controller.commands.CommandUtils;
 import com.company.model.entities.Activity;
-import com.company.model.entities.interfaces.TrackedItem;
 import com.company.model.services.users.PossibleActivitiesService;
 
 import javax.servlet.http.HttpServletRequest;

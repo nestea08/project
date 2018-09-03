@@ -1,6 +1,6 @@
 package com.company.controller.commands.user;
 
-import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.entities.interfaces.TimeTracking;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,15 +11,15 @@ class UserCommandUtils {
         return Integer.parseInt(session.getAttribute("userId").toString());
     }
 
-    static TrackedItem getTrackedItemFromSession(HttpSession session) {
+    static TimeTracking getTrackedItemFromSession(HttpSession session) {
         Object obj = session.getAttribute("trackedItem");
-        if (!(obj instanceof TrackedItem)) {
+        if (!(obj instanceof TimeTracking)) {
             throw new RuntimeException();
         }
-        return (TrackedItem)obj;
+        return (TimeTracking)obj;
     }
 
-    static void saveTrackedItemInSession(HttpSession session, TrackedItem item) {
+    static void saveTrackedItemInSession(HttpSession session, TimeTracking item) {
         session.setAttribute("trackedItem", item);
     }
 

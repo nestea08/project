@@ -1,17 +1,12 @@
 package com.company.controller.commands;
 
 import com.company.controller.Pagination;
-import com.company.model.entities.Activity;
 import com.company.model.entities.User;
-import com.company.model.entities.interfaces.TrackedItem;
-import com.sun.deploy.net.HttpRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
-import java.util.Locale;
 
 public class CommandUtils {
     static void saveUserInSession(HttpSession session, User user) {

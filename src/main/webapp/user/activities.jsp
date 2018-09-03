@@ -19,7 +19,7 @@
 </head>
 <body>
     <c:choose>
-        <c:when test="${empty requestScope.trackedItems}">
+        <c:when test="${empty requestScope.timeTrackings}">
             <fmt:message key="activities.empty"/><br/>
         </c:when>
         <c:otherwise>
@@ -28,13 +28,13 @@
     </c:choose>
 
 
-    <c:forEach items="${requestScope.trackedItems}" var="trackedItem">
+    <c:forEach items="${requestScope.timeTrackings}" var="timeTracking">
         <ul>
-            <li><c:out value="${trackedItem.title}"/></li>
-            <li><c:out value="${trackedItem.description}"/></li>
-            <li><c:out value="${trackedItem.spentTime}"/> <fmt:message key="activity.hours"/></li>
-            <a href="${pageContext.request.contextPath}/user/activity?id=${trackedItem.id}"> <fmt:message key="activities.more"/></a>
-            <a href="${pageContext.request.contextPath}/user/activity_remove?id=${trackedItem.id}"> <fmt:message key="activities.remove"/></a>
+            <li><c:out value="${timeTracking.title}"/></li>
+            <li><c:out value="${timeTracking.description}"/></li>
+            <li><c:out value="${timeTracking.spentTime}"/> <fmt:message key="activity.hours"/></li>
+            <a href="${pageContext.request.contextPath}/user/activity?id=${timeTracking.id}"> <fmt:message key="activities.more"/></a>
+            <a href="${pageContext.request.contextPath}/user/activity_remove?id=${timeTracking.id}"> <fmt:message key="activities.remove"/></a>
         </ul>
     </c:forEach>
 

@@ -6,7 +6,7 @@ import com.company.model.dao.mappers.HistoryItemMapper;
 import com.company.model.dao.mappers.TrackerUserMapper;
 import com.company.model.entities.HistoryItem;
 import com.company.model.entities.TrackerUser;
-import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.entities.interfaces.TimeTracking;
 import com.company.model.entities.interfaces.Tracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -103,12 +103,12 @@ public class JDBCHistoryItemDao implements HistoryItemDao {
         }
     }
 
-    public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem) {
+    public void transformTrackedIntoHistoryItem(Tracker tracker, TimeTracking timeTracking) {
         try {
             connection.setAutoCommit(false);
-            removeTrackedItem(tracker.getId(), trackedItem.getId());
-            HistoryItem historyItem = new HistoryItem(trackedItem.getTitle(),
-                    tracker, trackedItem.getSpentTime(), LocalDate.now());
+            removeTrackedItem(tracker.getId(), timeTracking.getId());
+            HistoryItem historyItem = new HistoryItem(timeTracking.getTitle(),
+                    tracker, timeTracking.getSpentTime(), LocalDate.now());
             create(historyItem);
             connection.commit();
         } catch (SQLException e) {

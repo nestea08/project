@@ -3,11 +3,8 @@ package com.company.model.services.users;
 import com.company.model.dao.*;
 import com.company.model.dao.impl.JDBCDaoFactory;
 import com.company.model.entities.*;
-import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.entities.interfaces.TimeTracking;
 import com.company.model.entities.interfaces.Tracker;
-import com.company.model.exceptions.DuplicateRequestException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -31,9 +28,9 @@ public class UsersUtils {
         }
     }
 
-    public void updateSpentTime(Tracker tracker, TrackedItem trackedItem) {
+    public void updateSpentTime(Tracker tracker, TimeTracking timeTracking) {
         try (TrackerUserDao dao = JDBCDaoFactory.getInstance().createTrackerUserDao()) {
-            dao.updateSpentTime(tracker, trackedItem);
+            dao.updateSpentTime(tracker, timeTracking);
         }
     }
 
@@ -43,9 +40,9 @@ public class UsersUtils {
         }
     }
 
-    public void transformTrackedIntoHistoryItem(Tracker tracker, TrackedItem trackedItem) {
+    public void transformTrackingIntoHistoryItem(Tracker tracker, TimeTracking timeTracking) {
         try (HistoryItemDao dao = JDBCDaoFactory.getInstance().createHistoryItemDao()) {
-            dao.transformTrackedIntoHistoryItem(tracker, trackedItem);
+            dao.transformTrackedIntoHistoryItem(tracker, timeTracking);
         }
     }
 

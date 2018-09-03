@@ -2,9 +2,9 @@ package com.company.controller.commands.user;
 
 import com.company.controller.commands.Command;
 import com.company.controller.InputValidator;
-import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.entities.interfaces.TimeTracking;
 import com.company.model.exceptions.InvalidSpentTimeException;
-import com.company.model.exceptions.UnknownTrackedItemException;
+import com.company.model.exceptions.UnknownTrackingException;
 import com.company.model.services.users.TimeTrackingService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +17,11 @@ public class TimeTrackingCommand implements Command {
             return request.getContextPath() + "/redirect/user/activities?language=" + language;
         }
         int userId = UserCommandUtils.getUserIdFromSession(request.getSession());
-        TrackedItem trackedItem = UserCommandUtils.getTrackedItemFromSession(request.getSession());
-        request.setAttribute("trackedItem", trackedItem);
+        TimeTracking timeTracking = UserCommandUtils.getTrackedItemFromSession(request.getSession());
+        request.setAttribute("timeTracking", timeTracking);
         String spentTime = request.getParameter("spentTime");
         if (spentTime != null) {
-            return handleTimeTracking(request, trackedItem.getId(), userId, spentTime);
+            return handleTimeTracking(request, timeTracking.getId(), userId, spentTime);
         }
         return "/user/activity.jsp";
     }
@@ -31,7 +31,7 @@ public class TimeTrackingCommand implements Command {
         try {
             checkTimeTracking(request, userId, activityId, spentTime);
         }
-        catch (UnknownTrackedItemException e) {
+        catch (UnknownTrackingException e) {
             return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }
         catch (Exception e) {
@@ -45,8 +45,8 @@ public class TimeTrackingCommand implements Command {
                                    String spentTime) throws InvalidSpentTimeException {
         TimeTrackingService service = new TimeTrackingService();
         checkSpentTimeValidity(spentTime);
-        TrackedItem trackedItem = service.trackTime(userId, activityId, Integer.parseInt(spentTime));
-        UserCommandUtils.saveTrackedItemInSession(request.getSession(), trackedItem);
+        TimeTracking timeTracking = service.trackTime(userId, activityId, Integer.parseInt(spentTime));
+        UserCommandUtils.saveTrackedItemInSession(request.getSession(), timeTracking);
     }
 
     private void checkSpentTimeValidity(String spentTime) throws InvalidSpentTimeException {

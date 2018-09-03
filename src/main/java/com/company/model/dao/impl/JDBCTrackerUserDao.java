@@ -3,7 +3,7 @@ package com.company.model.dao.impl;
 import com.company.model.dao.*;
 import com.company.model.dao.mappers.*;
 import com.company.model.entities.*;
-import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.entities.interfaces.TimeTracking;
 import com.company.model.entities.interfaces.Tracker;
 import com.company.model.exceptions.InvalidSpentTimeException;
 import org.apache.logging.log4j.LogManager;
@@ -47,7 +47,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 Activity activity = activityMapper.extractFromResultSet(set);
                 if (activity.getId() != 0) {
                     int spentTime = set.getInt("spent_time");
-                    trackerUser.addTrackedItem(new TimeTrackedItem(activity, spentTime));
+                    trackerUser.addTracking(new TimeTrackingItem(activity, spentTime));
                 }
             }
             return trackerUser;
@@ -72,7 +72,7 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
                 TrackerUser user = trackerUserMapper.extractFromResultSet(set);
                 user = trackerUserMapper.makeUnique(users, user);
                 int spentTime = set.getInt("spent_time");
-                user.addTrackedItem(new TimeTrackedItem(activity, spentTime));
+                user.addTracking(new TimeTrackingItem(activity, spentTime));
                 result.add(user);
             }
         } catch (SQLException | InvalidSpentTimeException e) {
@@ -103,12 +103,12 @@ public class JDBCTrackerUserDao implements TrackerUserDao {
     }
 
     @Override
-    public void updateSpentTime(Tracker tracker, TrackedItem trackedItem) {
+    public void updateSpentTime(Tracker tracker, TimeTracking timeTracking) {
         try (PreparedStatement statement = connection.prepareStatement
                 (bundle.getString("tracker.updateTime"))) {
-            statement.setInt(1, trackedItem.getSpentTime());
+            statement.setInt(1, timeTracking.getSpentTime());
             statement.setInt(2, tracker.getId());
-            statement.setInt(3, trackedItem.getId());
+            statement.setInt(3, timeTracking.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(e);
