@@ -1,15 +1,23 @@
 package com.company.model.entities;
 
 
-import com.company.model.entities.interfaces.TrackedItem;
+import com.company.model.entities.interfaces.TimeTracking;
 import com.company.model.entities.interfaces.Tracker;
-import com.company.model.exceptions.UnknownTrackedItemException;
+import com.company.model.exceptions.UnknownTrackingException;
 
 import java.util.*;
 
+/**
+ * Represents a web site user that can manage time trackings
+ *
+ * Is a wrapper for <code>List</code> of trackings trackings
+ */
 public class TrackerUser extends User implements Tracker{
-    private List<TrackedItem> trackedItems;
+    private List<TimeTracking> timeTrackings;
 
+    /**
+     * Extends user builder creating tracker user objects
+     */
     public static class Builder extends User.Builder {
         public Builder(String nickname, String login, String password) {
             super(nickname, login, password, Role.USER);
@@ -28,30 +36,35 @@ public class TrackerUser extends User implements Tracker{
 
     }
 
+    /**
+     * Constructs a tracker user from builder
+     *
+     * Initializes time trackings list
+     */
     private TrackerUser(Builder builder) {
         super(builder);
-        trackedItems = new ArrayList<>();
+        timeTrackings = new ArrayList<>();
     }
 
-    public void addTrackedItem(TrackedItem trackedItem) {
-        trackedItems.add(trackedItem);
+    public void addTracking(TimeTracking timeTracking) {
+        timeTrackings.add(timeTracking);
     }
 
-    public void removeTrackedItem(TrackedItem trackedItem) {
-        trackedItems.remove(trackedItem);
+    public void removeTracking(TimeTracking timeTracking) {
+        timeTrackings.remove(timeTracking);
     }
 
-    public TrackedItem getTrackedItemById(int id) {
-        Optional<TrackedItem> trackedOptional = trackedItems.stream().
+    public TimeTracking getTrackingById(int id) {
+        Optional<TimeTracking> trackingOptional = timeTrackings.stream().
                 filter(item -> item.getId() == id).findFirst();
-        if (!trackedOptional.isPresent()) {
-            throw new UnknownTrackedItemException(id);
+        if (!trackingOptional.isPresent()) {
+            throw new UnknownTrackingException(id);
         }
-        return trackedOptional.get();
+        return trackingOptional.get();
     }
 
-    public List<TrackedItem> getTrackedItems() {
-        return trackedItems;
+    public List<TimeTracking> getTimeTrackings() {
+        return timeTrackings;
     }
 
 }

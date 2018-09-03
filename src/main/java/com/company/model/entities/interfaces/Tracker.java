@@ -1,20 +1,21 @@
 package com.company.model.entities.interfaces;
 
-import com.company.model.exceptions.UnknownTrackedItemException;
-
 import java.util.List;
 
+/**
+ * Describes somebody who can manage trackings
+ */
 public interface Tracker {
     int getId();
 
     String getNickname();
 
-    void addTrackedItem(TrackedItem item);
+    void addTracking(TimeTracking item);
 
-    void removeTrackedItem(TrackedItem item);
+    void removeTracking(TimeTracking item);
 
-    List<TrackedItem> getTrackedItems();
+    List<TimeTracking> getTimeTrackings();
 
-    TrackedItem getTrackedItemById(int id) throws UnknownTrackedItemException;
+    TimeTracking getTrackingById(int id);
 
 }

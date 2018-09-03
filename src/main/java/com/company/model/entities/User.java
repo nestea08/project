@@ -2,6 +2,9 @@ package com.company.model.entities;
 
 import java.util.Objects;
 
+/**
+ * Represents a simple web site user
+ */
 public class User {
     private int id;
     private String nickname;
@@ -9,10 +12,16 @@ public class User {
     private String password;
     private Role role;
 
+    /**
+     * Describes a role of user
+     */
     public enum Role {
         GUEST, USER, ADMIN
     }
 
+    /**
+     * Implementation of builder pattern for user
+     */
     public static class Builder {
         protected int id = 0;
         private String nickname;
@@ -20,6 +29,9 @@ public class User {
         private String password;
         private Role role;
 
+        /**
+         * Constructs a builder with mandatory parameters
+         */
         public Builder(String nickname, String login, String password, Role role){
             this.nickname = nickname;
             this.login = login;
@@ -27,16 +39,26 @@ public class User {
             this.role = role;
         }
 
+        /**
+         * Sets an optional id parameter
+         * @return builder with specified id
+         */
         public Builder id(int val) {
             id = val;
             return this;
         }
 
+        /**
+         * Builds a user object
+         */
         public User build() {
             return new User(this);
         }
     }
 
+    /**
+     * Constructs user using builder
+     */
     User(Builder builder) {
         this.id = builder.id;
         this.nickname = builder.nickname;
@@ -65,6 +87,11 @@ public class User {
         return role;
     }
 
+    /**
+     * Compares two objects for equality.
+     * @return <code>true</code> if the objects are the same;
+     *         <code>false</code> otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,6 +102,10 @@ public class User {
                 password.equals(user.password);
     }
 
+    /**
+     * Computes a hash code to user
+     * @return hash code
+     */
     @Override
     public int hashCode() {
         return ((nickname.hashCode() * 31) + login.hashCode() * 31) + password.hashCode();
