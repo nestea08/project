@@ -1,5 +1,6 @@
 package com.company.controller.commands.user;
 
+import com.company.controller.PagesPaths;
 import com.company.controller.Pagination;
 import com.company.controller.commands.Command;
 import com.company.controller.commands.CommandUtils;
@@ -19,7 +20,7 @@ public class FindActivitiesCommand implements Command {
         CommandUtils.setCurrentPageForPagination(request, pagination);
         request.setAttribute("timeTrackings", pagination.getItemsForCurrentPage());
         request.setAttribute("pagesCount", pagination.getPagesCount());
-        return "/user/activities.jsp";
+        return "/WEB-INF/" + PagesPaths.ACTIVITIES;
     }
 
 }

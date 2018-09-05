@@ -1,5 +1,6 @@
 package com.company.controller.commands.user;
 
+import com.company.controller.PagesPaths;
 import com.company.controller.commands.Command;
 import com.company.controller.InputValidator;
 import com.company.model.entities.interfaces.TimeTracking;
@@ -23,7 +24,7 @@ public class TimeTrackingCommand implements Command {
         if (spentTime != null) {
             return handleTimeTracking(request, timeTracking.getId(), userId, spentTime);
         }
-        return "/user/activity.jsp";
+        return "/WEB-INF/" + PagesPaths.ACTIVITY;
     }
 
     private String handleTimeTracking(HttpServletRequest request,
@@ -36,7 +37,7 @@ public class TimeTrackingCommand implements Command {
         }
         catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
-            return "/user/activity.jsp";
+            return "/WEB-INF/" + PagesPaths.ACTIVITY;
         }
         return request.getContextPath() + "/redirect/user/time_tracking";
     }

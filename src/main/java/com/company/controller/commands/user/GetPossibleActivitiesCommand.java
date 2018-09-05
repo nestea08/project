@@ -1,5 +1,6 @@
 package com.company.controller.commands.user;
 
+import com.company.controller.PagesPaths;
 import com.company.controller.Pagination;
 import com.company.controller.commands.Command;
 import com.company.controller.commands.CommandUtils;
@@ -20,7 +21,7 @@ public class GetPossibleActivitiesCommand implements Command {
         CommandUtils.setCurrentPageForPagination(request, pagination);
         request.setAttribute("activities", pagination.getItemsForCurrentPage());
         request.setAttribute("pagesCount", pagination.getPagesCount());
-        return "/user/possible_activities.jsp";
+        return "/WEB-INF/" + PagesPaths.POSSIBLE_ACTIVITIES;
     }
 
 }

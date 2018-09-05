@@ -15,8 +15,8 @@ public class ExecuteUserRequestCommand implements Command {
             service.executeUserRequest(requestId);
         } catch (UnknownRequestException e) {
             request.getSession().setAttribute("exception", e.getLocalizedMessage());
-            return request.getContextPath() + "/redirect/admin/admin_exception.jsp";
+            return request.getContextPath() + "/redirect/admin/admin_exception_page";
         }
-        return request.getContextPath() + "/redirect/admin/request_executed.jsp";
+        return request.getContextPath() + "/redirect/admin/request_executed_page";
     }
 }

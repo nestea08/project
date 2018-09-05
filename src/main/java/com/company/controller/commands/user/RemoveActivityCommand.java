@@ -18,6 +18,6 @@ public class RemoveActivityCommand implements Command {
         } catch (DuplicateRequestException e) {
             return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }
-        return request.getContextPath() + "/redirect/user/activity_removed.jsp";
+        return request.getContextPath() + "/redirect/user/activity_removed_page";
     }
 }

@@ -2,7 +2,6 @@ package com.company.model.dao.impl;
 
 import com.company.model.dao.DaoFactory;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 
 import javax.sql.DataSource;
 import java.util.ResourceBundle;

@@ -1,8 +1,8 @@
 package com.company.controller.commands.admin;
 
+import com.company.controller.PagesPaths;
 import com.company.controller.commands.Command;
 import com.company.controller.InputValidator;
-import com.company.controller.commands.CommandUtils;
 import com.company.controller.exceptions.InvalidDescriptionException;
 import com.company.controller.exceptions.InvalidTitleException;
 import com.company.model.exceptions.NotUniqueActivityException;
@@ -23,18 +23,18 @@ public class CreateActivityCommand implements Command {
         }
         catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
-            return "/admin/create_activity.jsp";
+            return "/WEB-INF/" + PagesPaths.CREATE_ACTIVITY;
         }
-        return request.getContextPath() + "/redirect/admin/activity_created.jsp";
+        return request.getContextPath() + "/redirect/admin/activity_created_page";
     }
 
     private void checkActivityCreation(String enTitle, String ruTitle,
                                        String enDescription, String ruDescription)
             throws Exception {
         checkEnTitleValidity(enTitle);
-        //checkRuTitleValidity(ruTitle);
+        checkRuTitleValidity(ruTitle);
         checkEnDescriptionValidity(enDescription);
-        //checkRuDescriptionValidity(ruDescription);
+        checkRuDescriptionValidity(ruDescription);
         createActivity(enTitle, ruTitle, enDescription, ruDescription);
     }
 

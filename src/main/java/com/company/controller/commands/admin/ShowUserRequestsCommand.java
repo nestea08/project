@@ -1,5 +1,6 @@
 package com.company.controller.commands.admin;
 
+import com.company.controller.PagesPaths;
 import com.company.controller.Pagination;
 import com.company.controller.commands.Command;
 import com.company.controller.commands.CommandUtils;
@@ -16,7 +17,7 @@ public class ShowUserRequestsCommand implements Command {
         CommandUtils.setCurrentPageForPagination(request, pagination);
         request.setAttribute("requests", pagination.getItemsForCurrentPage());
         request.setAttribute("pagesCount", pagination.getPagesCount());
-        return "/admin/requests.jsp";
+        return "/WEB-INF/" + PagesPaths.REQUESTS;
     }
 
 }

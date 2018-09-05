@@ -26,6 +26,6 @@ class UserCommandUtils {
     static String setExceptionAttributeAndGetRedirectPath(Throwable throwable,
                                                           HttpServletRequest request) {
         request.getSession().setAttribute("exception", throwable.getLocalizedMessage());
-        return request.getContextPath() + "/redirect/user/user_exception.jsp";
+        return request.getContextPath() + "/redirect/user/user_exception_page";
     }
 }

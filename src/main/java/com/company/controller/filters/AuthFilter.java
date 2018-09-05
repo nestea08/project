@@ -1,8 +1,7 @@
 package com.company.controller.filters;
 
 import com.company.controller.commands.Command;
-import com.company.controller.commands.CommandUtils;
-import com.company.controller.commands.LogoutCommand;
+import com.company.controller.commands.guest.LogoutCommand;
 import com.company.model.entities.User;
 
 import javax.servlet.*;

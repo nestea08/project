@@ -18,6 +18,6 @@ public class StartActivityCommand implements Command {
         } catch (DuplicateRequestException e) {
             return UserCommandUtils.setExceptionAttributeAndGetRedirectPath(e, request);
         }
-        return request.getContextPath() + "/redirect/user/activity_started.jsp";
+        return request.getContextPath() + "/redirect/user/activity_started_page";
     }
 }

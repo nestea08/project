@@ -1,6 +1,8 @@
-package com.company.controller.commands;
+package com.company.controller.commands.guest;
 
 import com.company.controller.InputValidator;
+import com.company.controller.PagesPaths;
+import com.company.controller.commands.Command;
 import com.company.controller.exceptions.InvalidEmailException;
 import com.company.controller.exceptions.InvalidPasswordException;
 import com.company.model.entities.User;
@@ -20,14 +22,14 @@ public class LoginCommand implements Command {
         }
         catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
-            return "/login.jsp";
+            return "/WEB-INF/" + PagesPaths.LOGIN;
         }
-        CommandUtils.logUser(request.getServletContext(), user);
-        CommandUtils.saveUserInSession(request.getSession(), user);
+        GuestCommandUtils.logUser(request.getServletContext(), user);
+        GuestCommandUtils.saveUserInSession(request.getSession(), user);
         if (user.getRole() == User.Role.ADMIN) {
-            return request.getContextPath() + "/redirect/admin/admin.jsp";
+            return request.getContextPath() + "/redirect/admin/admin_page";
         } else {
-            return request.getContextPath() + "/redirect/user/user.jsp";
+            return request.getContextPath() + "/redirect/user/user_page";
         }
 
     }
@@ -47,7 +49,7 @@ public class LoginCommand implements Command {
     }
 
     private void checkLoggedUsers(HttpServletRequest request, String email) {
-        if (CommandUtils.isLogged(request.getServletContext(), email)) {
+        if (GuestCommandUtils.isLogged(request.getServletContext(), email)) {
             throw new RuntimeException();
         }
     }

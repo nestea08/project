@@ -1,6 +1,9 @@
-package com.company.controller.commands;
+package com.company.controller.commands.guest;
 
 import com.company.controller.InputValidator;
+import com.company.controller.PagesPaths;
+import com.company.controller.commands.Command;
+import com.company.controller.commands.CommandUtils;
 import com.company.controller.exceptions.InvalidEmailException;
 import com.company.controller.exceptions.InvalidNicknameException;
 import com.company.controller.exceptions.InvalidPasswordException;
@@ -9,8 +12,7 @@ import com.company.model.services.guests.SignUpService;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class SignupCommand implements Command {
-
+public class SignUpCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String nickname = request.getParameter("nickname");
@@ -23,11 +25,11 @@ public class SignupCommand implements Command {
             user = service.createUser(nickname, email, password);
         } catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
-            return "/signUp.jsp";
+            return "/WEB-INF/" + PagesPaths.SIGN_UP;
         }
-        CommandUtils.logUser(request.getServletContext(), user);
-        CommandUtils.saveUserInSession(request.getSession(), user);
-        return request.getContextPath() + "/redirect/user/user.jsp";
+        GuestCommandUtils.logUser(request.getServletContext(), user);
+        GuestCommandUtils.saveUserInSession(request.getSession(), user);
+        return request.getContextPath() + "/redirect/user/user_page";
     }
 
     private void checkInput(String nickname, String email, String password)

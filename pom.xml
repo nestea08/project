@@ -36,7 +36,8 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
+      <version>4.0.1</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -47,21 +48,9 @@
 
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.2</version>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>2.3.3</version>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.taglibs</groupId>
-      <artifactId>taglibs-standard-spec</artifactId>
-      <version>1.2.5</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.taglibs</groupId>
-      <artifactId>taglibs-standard-impl</artifactId>
-      <version>1.2.5</version>
     </dependency>
 
     <dependency>
@@ -74,12 +63,6 @@
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
       <version>1.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>tomcat-jdbc</artifactId>
-      <version>8.5.32</version>
     </dependency>
 
     <dependency>
@@ -103,7 +86,7 @@
               <artifactId>tomcat8-maven-plugin</artifactId>
               <version>2.2</version>
               <configuration>
-                  <port>8080</port>
+                  <port>8888</port>
                   <path>/tracker</path>
               </configuration>
           </plugin>

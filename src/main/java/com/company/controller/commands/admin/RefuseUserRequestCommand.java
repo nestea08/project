@@ -15,8 +15,8 @@ public class RefuseUserRequestCommand implements Command {
             service.refuseUserRequest(requestId);
         } catch (UnknownRequestException e) {
             request.getSession().setAttribute("exception", e.getLocalizedMessage());
-            return request.getContextPath() + "/redirect/admin/admin_exception.jsp";
+            return request.getContextPath() + "/redirect/admin/admin_exception_page";
         }
-        return request.getContextPath() + "/redirect/admin/request_refused.jsp";
+        return request.getContextPath() + "/redirect/admin/request_refused_page";
     }
 }

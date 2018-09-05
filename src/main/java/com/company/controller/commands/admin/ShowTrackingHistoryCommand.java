@@ -1,5 +1,6 @@
 package com.company.controller.commands.admin;
 
+import com.company.controller.PagesPaths;
 import com.company.controller.Pagination;
 import com.company.controller.commands.Command;
 import com.company.controller.commands.CommandUtils;
@@ -17,7 +18,7 @@ public class ShowTrackingHistoryCommand implements Command {
         CommandUtils.setCurrentPageForPagination(request, pagination);
         request.setAttribute("historyItems", pagination.getItemsForCurrentPage());
         request.setAttribute("pagesCount", pagination.getPagesCount());
-        return "/admin/history.jsp";
+        return "/WEB-INF/" + PagesPaths.HISTORY;
     }
 
 }
