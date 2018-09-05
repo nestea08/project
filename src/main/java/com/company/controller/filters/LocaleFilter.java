@@ -23,7 +23,6 @@ public class LocaleFilter implements Filter {
         }
         LocaleService service = new LocaleService();
         service.setLocale(new Locale(language));
-        System.out.println(language);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

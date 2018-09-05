@@ -13,22 +13,32 @@
 <fmt:setBundle basename="mybundle"/>
 
 <div class="content">
-    <label><fmt:message key="activity.title"/>: <c:out value="${requestScope.timeTracking.title}"/></label><br/>
-    <label><fmt:message key="activity.description"/>: <c:out value="${requestScope.timeTracking.description}"/></label><br/>
-    <label><fmt:message key="activity.spentTime"/>: <c:out value="${requestScope.timeTracking.spentTime}"/>
-        <fmt:message key="activity.hours"/></label><br/>
+    <div class="index_div">
+        <div class="info_div"><fmt:message key="activity.title"/>: <c:out value="${requestScope.timeTracking.title}"/></div>
+        <div class="info_div"><fmt:message key="activity.description"/>: <c:out value="${requestScope.timeTracking.description}"/></div>
+        <div class="info_div"><fmt:message key="activity.spentTime"/>: <c:out value="${requestScope.timeTracking.spentTime}"/>
+            <fmt:message key="activity.hours"/></div>
 
-    <form action="" method="post">
-        <fmt:message key="activity.addSpentTime"/>
-        <input type="number" name="spentTime"/>
-        <input type="submit" value="Change"/>
-    </form>
-
-    <c:if test="${not empty requestScope.exception}">
-        <fmt:message key="${requestScope.exception}"/><br/>
-    </c:if>
-
-    <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.timeTracking.id}"> <fmt:message key="activity.finish"/></a><br/>
-    <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
+        <form action="" method="post">
+            <div class="info_div">
+                <fmt:message key="activity.addSpentTime"/>
+            </div>
+            <div class="time_add_div">
+                <input type="number" name="spentTime"/>
+                <input type="submit" value="<fmt:message key="activity.submit"/>"/>
+            </div>
+        </form>
+        <div class="login_exception">
+            <c:if test="${not empty requestScope.exception}">
+                <fmt:message key="${requestScope.exception}"/><br/>
+            </c:if>
+        </div>
+        <div>
+            <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.timeTracking.id}"> <fmt:message key="activity.finish"/></a>
+        </div>
+        <div class="info_div">
+            <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
+        </div>
+    </div>
 </div>
 <jsp:include page="../footer.jsp"/>

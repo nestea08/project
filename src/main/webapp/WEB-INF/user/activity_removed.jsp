@@ -12,7 +12,9 @@
 <fmt:setBundle basename="mybundle"/>
 
 <div class="content">
-    <fmt:message key="remove.message"/>.
-    <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
+    <div class="index_div">
+        <fmt:message key="remove.message"/>.
+        <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
+    </div>
 </div>
 <jsp:include page="../footer.jsp"/>

@@ -7,17 +7,25 @@
 <fmt:setBundle basename="mybundle"/>
 
 <div class="content">
-    <fmt:message key="createActivity.message"/>
-    <form method="post" action="${pageContext.request.contextPath}/admin/create_activity">
-        <label><fmt:message key="createActivity.enTitle"/>: <input type="text" name="enTitle" ></label>
-        <label><fmt:message key="createActivity.ruTitle"/>: <input type="text" name="ruTitle" ></label><br/>
-        <label><fmt:message key="createActivity.enDescription"/>: <textarea name="enDescription"></textarea></label>
-        <label><fmt:message key="createActivity.ruDescription"/>: <textarea name="ruDescription"></textarea></label><br/>
-        <input type="submit" value="Create">
-    </form>
-    <c:if test="${not empty requestScope.exception}">
-        <fmt:message key="${requestScope.exception}"/><br/>
-    </c:if>
-    <a href="${pageContext.request.contextPath}/admin/admin_page"><fmt:message key="common.back"/></a>
+    <div class="index_div">
+        <div class="flex-div">
+            <div class="login_message">
+                <fmt:message key="createActivity.message"/>
+            </div>
+            <form class="create_act_form" method="post" action="${pageContext.request.contextPath}/admin/create_activity">
+                <div><fmt:message key="createActivity.enTitle"/>: <input class="login_input create_act_div" type="text" name="enTitle" ></div>
+                <div><fmt:message key="createActivity.ruTitle"/>: <input class="login_input create_act_div" type="text" name="ruTitle" ></div>
+                <div class="create_act_flex"><fmt:message key="createActivity.enDescription"/>:<textarea class="create_act_field" name="enDescription"></textarea></div>
+                <div class="create_act_flex"><fmt:message key="createActivity.ruDescription"/>:<textarea class="create_act_field" name="ruDescription"></textarea></div><br/>
+                <input type="submit" value="<fmt:message key="createActivity.submit"/>">
+            </form>
+            <div class="login_exception">
+                <c:if test="${not empty requestScope.exception}">
+                    <fmt:message key="${requestScope.exception}"/><br/>
+                </c:if>
+            </div>
+            <a href="${pageContext.request.contextPath}/admin/admin_page"><fmt:message key="common.back"/></a>
+        </div>
+    </div>
 </div>
 <jsp:include page="../footer.jsp"/>

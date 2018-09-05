@@ -19,17 +19,14 @@ public class SignUpCommand implements Command {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         SignUpService service = new SignUpService();
-        User user;
         try {
             checkInput(nickname, email, password);
-            user = service.createUser(nickname, email, password);
+            service.createUser(nickname, email, password);
         } catch (Exception e) {
             request.setAttribute("exception", e.getLocalizedMessage());
             return "/WEB-INF/" + PagesPaths.SIGN_UP;
         }
-        GuestCommandUtils.logUser(request.getServletContext(), user);
-        GuestCommandUtils.saveUserInSession(request.getSession(), user);
-        return request.getContextPath() + "/redirect/user/user_page";
+        return new LoginCommand().execute(request);
     }
 
     private void checkInput(String nickname, String email, String password)

@@ -50,16 +50,13 @@ public class AuthFilter implements Filter {
     }
 
     private boolean authorizedUserReturnsToGuestPages(String uri, User.Role role) {
-        return adminReturnsToGuestPages(uri, role) || userReturnsToGuestPages(uri, role);
+        return role != User.Role.GUEST && returnsToGuestPages(uri);
     }
 
-    private boolean userReturnsToGuestPages(String uri, User.Role role) {
-        return !uri.contains("/user/") && role == User.Role.USER;
+    private boolean returnsToGuestPages(String uri) {
+        return uri.contains("/guest/") || uri.contains("index.jsp") || uri.equals("/tracker/");
     }
 
-    private boolean adminReturnsToGuestPages(String uri, User.Role role) {
-        return !uri.contains("/admin/") && role == User.Role.ADMIN;
-    }
 
     @Override
     public void destroy() {
