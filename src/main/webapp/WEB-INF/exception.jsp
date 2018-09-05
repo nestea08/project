@@ -12,17 +12,16 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
 
-<html>
-    <body>
-        <c:choose>
-            <c:when test="${not empty sessionScope.exception}">
-                <fmt:message key="${sessionScope.exception}"/>.
-            </c:when>
-            <c:otherwise>
-                <fmt:message key="exception.message"/>.
-            </c:otherwise>
-        </c:choose>
-        <br/>
-        <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="exception.home"/></a>
-    </body>
-</html>
+<div class="content">
+    <c:choose>
+        <c:when test="${not empty sessionScope.exception}">
+            <fmt:message key="${sessionScope.exception}"/>.
+        </c:when>
+        <c:otherwise>
+            <fmt:message key="exception.message"/>.
+        </c:otherwise>
+    </c:choose>
+    <br/>
+    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="exception.home"/></a>
+</div>
+<jsp:include page="footer.jsp"/>

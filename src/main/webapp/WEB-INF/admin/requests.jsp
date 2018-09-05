@@ -1,18 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: vlad
-  Date: 22.08.2018
-  Time: 12:36
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="../master.jsp" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
-<html>
-<body>
+
+<div class="content">
     <c:choose>
         <c:when test="${empty requestScope.requests}">
             <fmt:message key="requests.empty"/>:<br/>
@@ -42,6 +36,6 @@
     <c:forEach var="i" begin="1" end="${requestScope.pagesCount}">
         <a href="?page=${i}"><c:out value="${i}"/></a>
     </c:forEach>
-    <a href="${pageContext.request.contextPath}/admin/admin.jsp"><fmt:message key="common.back"/></a>
-</body>
-</html>
+    <a href="${pageContext.request.contextPath}/admin/admin_page"><fmt:message key="common.back"/></a>
+</div>
+<jsp:include page="../footer.jsp"/>

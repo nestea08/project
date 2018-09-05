@@ -1,17 +1,29 @@
 
-
 <web-app version="3.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
           http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
 
     <servlet>
       <servlet-name>PresentServlet</servlet-name>
       <servlet-class>com.company.controller.Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
-      <servlet-name>PresentServlet</servlet-name>
-      <url-pattern>/</url-pattern>
+        <servlet-name>PresentServlet</servlet-name>
+        <url-pattern>/exception</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PresentServlet</servlet-name>
+        <url-pattern>/user/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PresentServlet</servlet-name>
+        <url-pattern>/guest/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PresentServlet</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
     </servlet-mapping>
 
     <filter>
@@ -53,7 +65,7 @@
 
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/exception.jsp</location>
+        <location>/WEB-INF/exception.jsp</location>
     </error-page>
 
 </web-app>

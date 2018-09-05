@@ -5,12 +5,8 @@
 <jsp:include page="../master.jsp" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
-<html>
-    <head>
 
-    </head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-
+<div class="content">
     <fmt:message key="createActivity.message"/>
     <form method="post" action="${pageContext.request.contextPath}/admin/create_activity">
         <label><fmt:message key="createActivity.enTitle"/>: <input type="text" name="enTitle" ></label>
@@ -22,8 +18,6 @@
     <c:if test="${not empty requestScope.exception}">
         <fmt:message key="${requestScope.exception}"/><br/>
     </c:if>
-    <a href="${pageContext.request.contextPath}/admin/admin.jsp"><fmt:message key="common.back"/></a>
-<body>
-
-</body>
-</html>
+    <a href="${pageContext.request.contextPath}/admin/admin_page"><fmt:message key="common.back"/></a>
+</div>
+<jsp:include page="../footer.jsp"/>

@@ -13,11 +13,7 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
 
-<html>
-<head>
-    <title>Time Tracking</title>
-</head>
-<body>
+<div class="content">
     <c:choose>
         <c:when test="${empty requestScope.timeTrackings}">
             <fmt:message key="activities.empty"/><br/>
@@ -42,6 +38,6 @@
         <a href="?page=${i}"><c:out value="${i}"/></a>
     </c:forEach>
 
-    <a href="${pageContext.request.contextPath}/user/user.jsp"><fmt:message key="common.back"/></a>
-</body>
-</html>
+    <a href="${pageContext.request.contextPath}/user/user_page"><fmt:message key="common.back"/></a>
+</div>
+<jsp:include page="../footer.jsp"/>

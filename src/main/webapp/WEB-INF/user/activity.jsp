@@ -11,11 +11,8 @@
 <jsp:include page="../master.jsp" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="mybundle"/>
-<html>
-<head>
-    <title>Time Tracking</title>
-</head>
-<body>
+
+<div class="content">
     <label><fmt:message key="activity.title"/>: <c:out value="${requestScope.timeTracking.title}"/></label><br/>
     <label><fmt:message key="activity.description"/>: <c:out value="${requestScope.timeTracking.description}"/></label><br/>
     <label><fmt:message key="activity.spentTime"/>: <c:out value="${requestScope.timeTracking.spentTime}"/>
@@ -33,5 +30,5 @@
 
     <a href="${pageContext.request.contextPath}/user/activity_finish?id=${requestScope.timeTracking.id}"> <fmt:message key="activity.finish"/></a><br/>
     <a href="${pageContext.request.contextPath}/user/activities"><fmt:message key="common.back"/></a>
-</body>
-</html>
+</div>
+<jsp:include page="../footer.jsp"/>
