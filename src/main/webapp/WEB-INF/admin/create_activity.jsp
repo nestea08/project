@@ -13,8 +13,8 @@
                 <fmt:message key="createActivity.message"/>
             </div>
             <form class="create_act_form" method="post" action="${pageContext.request.contextPath}/admin/create_activity">
-                <div><fmt:message key="createActivity.enTitle"/>: <input class="login_input create_act_div" type="text" name="enTitle" ></div>
-                <div><fmt:message key="createActivity.ruTitle"/>: <input class="login_input create_act_div" type="text" name="ruTitle" ></div>
+                <div><fmt:message key="createActivity.enTitle"/>: <input class="login_input create_act_div" type="text" name="enTitle" autocomplete="off"></div>
+                <div><fmt:message key="createActivity.ruTitle"/>: <input class="login_input create_act_div" type="text" name="ruTitle" autocomplete="off"></div>
                 <div class="create_act_flex"><fmt:message key="createActivity.enDescription"/>:<textarea class="create_act_field" name="enDescription"></textarea></div>
                 <div class="create_act_flex"><fmt:message key="createActivity.ruDescription"/>:<textarea class="create_act_field" name="ruDescription"></textarea></div><br/>
                 <input type="submit" value="<fmt:message key="createActivity.submit"/>">

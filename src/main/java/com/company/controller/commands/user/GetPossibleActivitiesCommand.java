@@ -17,7 +17,7 @@ public class GetPossibleActivitiesCommand implements Command {
         int id = UserCommandUtils.getUserIdFromSession(request.getSession());
         PossibleActivitiesService service = new PossibleActivitiesService();
         List<Activity> activities = service.getPossibleActivities(id);
-        Pagination<Activity> pagination = new Pagination<>(activities, 7);
+        Pagination<Activity> pagination = new Pagination<>(activities, 5);
         CommandUtils.setCurrentPageForPagination(request, pagination);
         request.setAttribute("activities", pagination.getItemsForCurrentPage());
         request.setAttribute("pagesCount", pagination.getPagesCount());

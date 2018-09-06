@@ -10,7 +10,7 @@
     <div class="index_div">
         <c:choose>
             <c:when test="${empty requestScope.requests}">
-                <fmt:message key="requests.empty"/>:<br/>
+                <fmt:message key="requests.empty"/><br/>
             </c:when>
             <c:otherwise>
                 <fmt:message key="requests.message"/>:<br/>

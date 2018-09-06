@@ -21,7 +21,7 @@
             <ul>
                 <li><fmt:message key="history.username"/>: <c:out value="${item.tracker.nickname}"/></li>
                 <li><fmt:message key="history.title"/>: <c:out value="${item.title}"/></li>
-                <li><fmt:message key="history.spentTime"/>: <c:out value="${item.spentTime}"/></li>
+                <li><fmt:message key="history.spentTime"/>: <c:out value="${item.spentTime}"/> <fmt:message key="activity.hours"/></li>
                 <li><fmt:message key="history.endDate"/>:
                     <fmt:parseDate value="${item.endDate}" pattern="yyyy-MM-dd" var="parsedDate"/>
                     <fmt:formatDate value="${parsedDate}" />
